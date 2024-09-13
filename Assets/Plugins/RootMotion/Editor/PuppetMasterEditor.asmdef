@@ -1,0 +1,19 @@
+{
+    "name": "PuppetMasterEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bb15009dc431f6d45aa93417beb5dd00",
+        "GUID:4299fded61abbbb4181b6c61eca74993"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

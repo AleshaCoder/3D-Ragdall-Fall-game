@@ -1,0 +1,23 @@
+{
+    "name": "Agava.Playground.HUDSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:6b946f1eb14e846498e3a2a08cf82d42",
+        "GUID:878edfc53761bd74a8b1fff158000d4b",
+        "GUID:580ffa8f941aeaa4b88402f610c20a7b",
+        "GUID:85d05d5730c0f51409041e12ea9ac3c1",
+        "GUID:2a3c6d7d9c519f146a20581adf32e7f8",
+        "GUID:0920e113786b6c9479732b5ebe43f5b9",
+        "GUID:4299fded61abbbb4181b6c61eca74993"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,16 @@
+{
+    "name": "SceneLoading",
+    "rootNamespace": "SceneLoading",
+    "references": [
+        "GUID:a64a2c138bea86a4a8bea38a19ee2a11"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
