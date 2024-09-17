@@ -34,6 +34,9 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
         public bool IsActive { get; private set; }
 
         public event Action<Item> ItemSpawned;
+        public event Action Spawned;
+        public event Action ItemCanceled;
+        public event Action<IItemCreatingView> ItemPrepared;
 
         public void Construct(IInputMap input, IRayCaster raycaster, bool isMobile = false)
         {
@@ -51,22 +54,27 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
             _spawnButton.onClick.RemoveListener(OnTryingSpawn);
         }
 
-        public void PrepareRecreateRagdoll(RagdollType type)
+        public void PrepareRecreateRagdoll(Unit unit)
         {
-            if (_createdScriptableObjects.TryGetCharacter(type, out Item item))
+            if (_createdScriptableObjects.TryGetCharacter(unit.Type, out Item item))
+            {
+                Object.Destroy(unit.gameObject);
                 CreateItem(item);
+            }
         }
 
-        public void PrepareRecreateWeapon(WeaponType type)
+        public void PrepareRecreateCharacter(MainCharacter character)
         {
-            if (_createdScriptableObjects.TryGetWeapon(type, out Item item))
-                CreateItem(item);
+            CreateItem(character);
         }
 
         public void PrepareRecreateItem(Building building)
         {
             if (_createdScriptableObjects.TryGetItem(building.Type, out Item item))
+            {
+                Object.Destroy(building.gameObject);
                 CreateItem(item);
+            }
         }
 
         public void PrepareCreateRagdoll(RagdollType type)
@@ -75,29 +83,27 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
                 CreateItem(item);
         }
 
-        public void PrepareCreateWeapon(WeaponType type)
-        {
-            if (_createdScriptableObjects.TryGetWeapon(type, out Item item))
-                CreateItem(item);
-        }
-
         public void PrepareCreateItem(ItemsType type)
         {
             if (_createdScriptableObjects.TryGetItem(type, out Item item))
-            CreateItem(item);
+                CreateItem(item);
         }
 
-        public void CancelItemCreation() => CreateItem(null);
+        public void CancelItemCreation()
+        {
+            CreateItem(null);
+            ItemCanceled?.Invoke();
+        }
 
         private void UnshowModel(bool obj) => _canShow = false;
         private void ShowModel(float arg1, float arg2) => _canShow = true;
 
         public void Tick()
         {
-            if (!_canShow) 
+            if (!_canShow)
                 return;
 
-            if (_itemView == null) 
+            if (_itemView == null)
                 return;
 
             GetPosition();
@@ -110,7 +116,7 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
         {
             if (_itemView != null)
             {
-                _itemView.Dispose();
+                _itemView.Dispose(_item is not IDontDestroyableFromScene);
                 _itemView = null;
             }
 
@@ -121,9 +127,20 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
             if (item == null)
                 return;
 
-            _itemView = Instantiate(_position, item.CreatingModel, Quaternion.identity);
+            if (item is IDontDestroyableFromScene)
+            {
+                _itemView = _item.CreatingModel;
+                _removeItemButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                _itemView = Instantiate(_position, item.CreatingModel, Quaternion.identity);
+                _removeItemButton.gameObject.SetActive(true);
+            }
+
             _itemView.Init();
             _spawnAngle = _itemView.SpawnAngle;
+            ItemPrepared?.Invoke(_itemView);
         }
 
         private void OnTryingSpawn()
@@ -143,9 +160,16 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
 
         private void SpawnItem()
         {
-            var item = InstantiateItem(_position, _item, _itemView.Rotation);
-            item.Init(_spawnQueue.AddItemWithIndex(item));
+            var item = _item;
+
+            if (_item is not IDontDestroyableFromScene)
+            {
+                item = InstantiateItem(_position, _item, _itemView.Rotation);
+                item.Init(_spawnQueue.AddItemWithIndex(item));
+            }
+
             ItemSpawned?.Invoke(item);
+            Spawned?.Invoke();
         }
 
         private void GetPosition()

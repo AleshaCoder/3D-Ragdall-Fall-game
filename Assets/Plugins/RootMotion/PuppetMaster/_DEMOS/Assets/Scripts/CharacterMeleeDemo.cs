@@ -35,7 +35,7 @@ namespace RootMotion.Demos {
 
 		protected override void Start() {
 			currentActionIndex = -1;
-			lastActionTime = 0f;
+			lastActionTime = 1f;
 
 			base.Start();
 		}

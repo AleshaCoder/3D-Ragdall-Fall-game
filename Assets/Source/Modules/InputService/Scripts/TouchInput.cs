@@ -38,7 +38,7 @@ namespace Assets.Source.InputService.Scripts
         protected override void Move()
         {
             OnMoving(new(_joystickMove.Horizontal, _joystickMove.Vertical));
-            OnAlternativeMoving(new(_joystickRotate.Horizontal, _joystickRotate.Vertical));
+            //OnAlternativeMoving(new(_joystickRotate.Horizontal, _joystickRotate.Vertical));
         }
 
         protected override void HandlePointer()

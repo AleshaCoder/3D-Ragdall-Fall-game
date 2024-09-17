@@ -1,8 +1,9 @@
+using RotationSystem;
 using UnityEngine;
 
 namespace Assets.Source.Entities.Scripts
 {
-    public interface IItemCreatingView
+    public interface IItemCreatingView : IRotatable, IScalable
     {
         public Quaternion Rotation { get; }
         public bool CanSpawn { get; }
@@ -10,6 +11,6 @@ namespace Assets.Source.Entities.Scripts
         public void Init();
         public void SetAngle(bool isAcceptableAngle);
         public void SetPosition(Vector3 position, Vector3 normal);
-        public void Dispose();
+        public void Dispose(bool withDestroy = true);
     }
 }

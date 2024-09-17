@@ -1,0 +1,17 @@
+{
+    "name": "Ragdoll",
+    "rootNamespace": "Ragdoll",
+    "references": [
+        "GUID:4299fded61abbbb4181b6c61eca74993",
+        "GUID:bb15009dc431f6d45aa93417beb5dd00"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

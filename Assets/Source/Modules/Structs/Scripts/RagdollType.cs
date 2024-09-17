@@ -10,5 +10,11 @@ namespace Assets.Source.Structs.Scripts
         Agent,
         MinecraftGay,
         Stikky,
+        FNAFBear,
+        Hat,
+        Cat,
+        HumanCat,
+        Bulba,
+        StickCat
     }
 }

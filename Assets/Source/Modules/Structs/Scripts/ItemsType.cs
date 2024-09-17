@@ -3,9 +3,19 @@ namespace Assets.Source.Structs.Scripts
     public enum ItemsType
     {
         Default,
-        Car,
-        Wrench,
+        Blades2,
+        Blades3,
+        VRotators4,
         Box,
-        Rain,
+        Axe,
+        BigRotator,
+        Hook,
+        ProppelerTramp,
+        SpeedUp,
+        Tramp,
+        VRotator,
+        Tube,
+        AngledTube,
+        SpiralTube
     }
 }

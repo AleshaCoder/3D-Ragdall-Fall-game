@@ -54,11 +54,11 @@ namespace Assets.Source.InputService.Scripts
 
         private void OnItemSpawned(Item item)
         {
-            if (item.Center != null)
-            {
-                _selectionCirclce.gameObject.SetActive(true);
-                _selectionCirclce.Set(item);
-            }
+            //if (item.Center != null)
+            //{
+            //    _selectionCirclce.gameObject.SetActive(true);
+            //    _selectionCirclce.Set(item);
+            //}
         }
 
         private void OnClick(Vector3 position)
@@ -97,11 +97,11 @@ namespace Assets.Source.InputService.Scripts
                 _dragItem = item;
                 _dragItem.StartDrag();
 
-                if (item.Center != null)
-                {
-                    _selectionCirclce.gameObject.SetActive(true);
-                    _selectionCirclce.Set(item);
-                }
+                //if (item.Center != null)
+                //{
+                //    _selectionCirclce.gameObject.SetActive(true);
+                //    _selectionCirclce.Set(item);
+                //}
 
                 return;
             }

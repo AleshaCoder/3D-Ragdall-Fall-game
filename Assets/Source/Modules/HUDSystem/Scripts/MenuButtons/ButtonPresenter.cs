@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Source.Entities.Scripts;
+using System;
 using UnityEngine;
 
 namespace Assets.Source.HUDSystem.Scripts.MenuButtons

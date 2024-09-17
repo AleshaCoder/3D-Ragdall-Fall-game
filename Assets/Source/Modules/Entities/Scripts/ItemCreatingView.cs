@@ -7,6 +7,12 @@ namespace Assets.Source.Entities.Scripts
     {
         [SerializeField] private Renderer[] _meshRenderers;
         [SerializeField] private float _spawnAngle;
+        [field: SerializeField] public bool CanRotateX { get; private set; } = false;
+        [field: SerializeField] public bool CanRotateY { get; private set; } = true;
+        [field: SerializeField] public bool CanRotateZ { get; private set; } = false;
+        [field: SerializeField] public bool CanScale { get; private set; } = true;
+        [HideInInspector] public Vector3 OriginRotation { get; private set; }
+        [HideInInspector] public Vector3 OriginScale { get; private set; }
 
         private bool _isAcceptableAngle = true;
         private List<SpawnChecker> _colliders;
@@ -15,16 +21,48 @@ namespace Assets.Source.Entities.Scripts
         public float SpawnAngle => _spawnAngle;
         public Quaternion Rotation => transform.rotation;
 
+        public void RotateX(float x)
+        {
+            transform.eulerAngles = OriginRotation + new Vector3(x, 0, 0);
+        }
+
+        public void RotateY(float y)
+        {
+            transform.eulerAngles = OriginRotation + new Vector3(0, y, 0);
+        }
+
+        public void RotateZ(float z)
+        {
+            transform.eulerAngles = OriginRotation + new Vector3(0, 0, z);
+        }
+
+        public void Scale(float z)
+        {
+            transform.localScale = OriginScale * z;
+        }
+
+        public void UpdateOriginRotation()
+        {
+            OriginRotation = transform.eulerAngles;
+        }
+
+        public void UpdateOriginScale()
+        {
+            OriginRotation = transform.localScale;
+        }
+
         public void Init()
         {
             _colliders = new();
             SetView();
+            UpdateOriginRotation();
+            UpdateOriginScale();
         }
 
         public void SetPosition(Vector3 position, Vector3 normal)
         {
             transform.position = position;
-            transform.up = normal;
+            //transform.up = normal;
         }
 
         public void SetAngle(bool isAcceptableAngle)
@@ -33,9 +71,13 @@ namespace Assets.Source.Entities.Scripts
             SetView();
         }
 
-        public void Dispose()
+        public void Dispose(bool withDestroy = true)
         {
-            Destroy(gameObject);
+            foreach (var mesh in _meshRenderers)
+                mesh.material.color = Color.white;
+
+            if (withDestroy)
+                Destroy(gameObject);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -47,9 +89,27 @@ namespace Assets.Source.Entities.Scripts
             }
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.transform.TryGetComponent(out SpawnChecker checker))
+            {
+                _colliders.Add(checker);
+                SetView();
+            }
+        }
+
         private void OnTriggerExit(Collider other)
         {
             if (other.TryGetComponent(out SpawnChecker checker))
+            {
+                _colliders.Remove(checker);
+                SetView();
+            }
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            if (collision.transform.TryGetComponent(out SpawnChecker checker))
             {
                 _colliders.Remove(checker);
                 SetView();

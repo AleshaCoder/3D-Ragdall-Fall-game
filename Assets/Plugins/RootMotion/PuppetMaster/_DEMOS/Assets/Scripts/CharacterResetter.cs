@@ -13,7 +13,7 @@ namespace RootMotion.Demos
         public PuppetMaster puppetMaster;
 
         [Tooltip("Reference to the Transform component of Character Controller.")]
-        public Transform character;
+        public CharacterMeleeDemo character;
 
         private Dictionary<Transform, TransformState> initialStates = new Dictionary<Transform, TransformState>();
 
@@ -32,7 +32,7 @@ namespace RootMotion.Demos
             }
 
             // Сохраняем исходное состояние для всех объектов в иерархии
-            SaveInitialStates(character);
+            SaveInitialStates(character.transform);
             SaveInitialStates(puppetMaster.transform);
         }
 
@@ -58,14 +58,14 @@ namespace RootMotion.Demos
         /// </summary>
         public void ResetCharacter()
         {
-            character.gameObject.SetActive(false);
             puppetMaster.state = PuppetMaster.State.Alive;
             puppetMaster.enabled = false;
+            character.enabled = false;
 
             ResetRigidbodies(puppetMaster.transform);
-            RestoreInitialStates(character);
+            RestoreInitialStates(character.transform);
             RestoreInitialStates(puppetMaster.transform);
-            character.gameObject.SetActive(true);
+            character.enabled = true;
             puppetMaster.enabled = true;
             ////puppetMaster.Rebuild();
 

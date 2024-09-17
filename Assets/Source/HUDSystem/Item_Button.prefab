@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5249709227256637421}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -111,7 +110,6 @@ RectTransform:
   - {fileID: 1459793587208222404}
   - {fileID: 7141847945275568968}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -168,9 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f69f0f135016b4eb68b1d9618a8797, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _frameImage: {fileID: 639630008794279630}
   _iconsAnimator:
-    _selectColor: {r: 1, g: 0.80784315, b: 0, a: 1}
+    _enableSprite: {fileID: 0}
   <Type>k__BackingField: 0
 --- !u!1 &5659208747132066302
 GameObject:
@@ -203,7 +200,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5249709227256637421}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -279,7 +275,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5249709227256637421}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -314,7 +309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f38c0e1611b5604469b688b7fd5a4a3a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f7cdb5e9e71dfe3498c8644e5ce0a3e1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

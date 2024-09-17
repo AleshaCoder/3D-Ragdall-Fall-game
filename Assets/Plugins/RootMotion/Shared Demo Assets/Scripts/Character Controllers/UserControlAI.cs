@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RootMotion.Dynamics;
 
 namespace RootMotion.Demos {
 	
@@ -16,7 +17,7 @@ namespace RootMotion.Demos {
         protected override void Start()
         {
             base.Start();
-
+            moveTarget = transform;
             navigator.Initiate(transform);
         }
 

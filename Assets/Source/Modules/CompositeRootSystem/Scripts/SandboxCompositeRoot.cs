@@ -7,6 +7,7 @@ using Assets.Source.RayCasterSystem.Scripts;
 using Assets.Source.GravityGunSystem.Scripts;
 using UnityEngine.UI;
 using RootMotion.Demos;
+using RotationSystem;
 
 namespace Assets.Source.CompositeRootSystem.Scripts
 {
@@ -36,6 +37,7 @@ namespace Assets.Source.CompositeRootSystem.Scripts
         private InputManager _inputManager;
         private InputHandler _inputHandler;
         private RayCaster _rayCaster;
+        private ItemRotator _itemRotator;
         private IInputMap _inputMap;
         private CameraConfigType _cameraConfigType;
 
@@ -53,8 +55,13 @@ namespace Assets.Source.CompositeRootSystem.Scripts
             _mover.Construct(_inputMap as ICameraInput, _cameraConfigType);
             _mobileUserControlMelee.Construct(_inputMap);
             _cameraCharacterController.Construct(_inputMap);
+            _itemRotator = new();
             InitializeGravityGun();
             InitializeHUD();
+
+            _sandboxHUD.ItemsSpawner.ItemPrepared += _itemRotator.SetRotatable;
+            _sandboxHUD.ItemsSpawner.Spawned += _itemRotator.FreeRotatable;
+            _sandboxHUD.ItemsSpawner.ItemCanceled += _itemRotator.FreeRotatable;
             _inputHandler = new(_inputMap, _rayCaster, _sandboxHUD.ItemsSpawner, _selectionCircle, _layerMask);
         }
 
@@ -63,6 +70,10 @@ namespace Assets.Source.CompositeRootSystem.Scripts
             _sandboxHUD.Dispose();
             _gravityGunHandler.Dispose();
             _mover.Dispose();
+
+            _sandboxHUD.ItemsSpawner.ItemPrepared -= _itemRotator.SetRotatable;
+            _sandboxHUD.ItemsSpawner.ItemCanceled -= _itemRotator.FreeRotatable;
+            _sandboxHUD.ItemsSpawner.Spawned -= _itemRotator.FreeRotatable;
         }
 
         private void Update()
@@ -89,7 +100,8 @@ namespace Assets.Source.CompositeRootSystem.Scripts
                 Input = _inputMap ?? throw new ArgumentNullException(nameof(_inputMap)),
                 RayCaster = _rayCaster ?? throw new ArgumentNullException(nameof(_rayCaster)),
                 Joystick = _movementJoystick ?? throw new ArgumentNullException(nameof(_movementJoystick)),
-                CharacterResetter = _resetter ?? throw new ArgumentNullException(nameof(_resetter))
+                CharacterResetter = _resetter ?? throw new ArgumentNullException(nameof(_resetter)),
+                ItemRotator = _itemRotator ?? throw new ArgumentNullException(nameof(_itemRotator))
             };
 
             _sandboxHUD.Construct(_hudComponents);

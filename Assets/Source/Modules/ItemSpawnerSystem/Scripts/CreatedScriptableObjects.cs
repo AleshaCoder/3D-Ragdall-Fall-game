@@ -11,8 +11,8 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
     {
         [Header("Characters")]
         [SerializeField] private List<Unit> _characters;
-        [Header("Weapons")]
-        [SerializeField] private List<Weapon> _weapons;
+        [Header("Main Characters")]
+        [SerializeField] private List<MainCharacter> _mainCharacters;
         [Header("Items")]
         [SerializeField] private List<Building> _items;
 
@@ -23,9 +23,9 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
             return result != null;
         }
 
-        public bool TryGetWeapon(WeaponType weaponType, out Item result)
+        public bool TryGetMainCharacter(RagdollType ragdollType, out Item result)
         {
-            result = _weapons.FirstOrDefault(p => p.Type == weaponType);
+            result = _mainCharacters.FirstOrDefault(p => p.Type == ragdollType);
 
             return result != null;
         }
