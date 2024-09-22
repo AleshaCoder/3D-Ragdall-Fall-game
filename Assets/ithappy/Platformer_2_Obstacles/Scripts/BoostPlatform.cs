@@ -1,3 +1,6 @@
+using RootMotion.Dynamics;
+using System.Linq;
+using TimeSystem;
 using UnityEngine;
 
 namespace ithappy
@@ -5,8 +8,7 @@ namespace ithappy
     public class BoostPlatform : MonoBehaviour
     {
         public float boostForce = 20f;
-
-        public Vector3 boostDirection = Vector3.forward;
+        public Transform director;
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -14,13 +16,23 @@ namespace ithappy
 
             if (rb != null)
             {
-                Vector3 normalizedBoostDirection = boostDirection.normalized;
-                rb.AddForce(normalizedBoostDirection * boostForce, ForceMode.Impulse);
+                PuppetMaster puppetMaster = rb.GetComponentInParent<PuppetMaster>();
+
+                if (puppetMaster != null && puppetMaster != transform.GetComponentInParent<PuppetMaster>())
+                {
+                    var muscles = puppetMaster.muscles.Where(m => m.props.group == Muscle.Group.Spine || m.props.group == Muscle.Group.Hips);
+                    foreach (var m in muscles)
+                    {
+                        var boostDirection = (director.position - transform.position).normalized;
+                        m.rigidbody.AddForce(boostDirection.normalized * boostForce * TimeService.Scale, ForceMode.Impulse);
+                    }
+                }
             }
         }
 
         private void OnDrawGizmos()
         {
+            var boostDirection = (director.position - transform.position).normalized;
             Gizmos.DrawRay(transform.position, boostDirection);
         }
     }

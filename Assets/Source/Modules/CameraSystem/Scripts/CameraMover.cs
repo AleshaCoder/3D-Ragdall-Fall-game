@@ -28,7 +28,7 @@ namespace Assets.Source.CameraSystem.Scripts
         private bool _rotatingBlocked = false;
 
         public void Construct(ICameraInput input, CameraConfigType type)
-        {          
+        {
             _input = input ?? throw new ArgumentNullException(nameof(input));
 
             _cameraAngle = _camera.transform.localEulerAngles.x;
@@ -48,8 +48,17 @@ namespace Assets.Source.CameraSystem.Scripts
             _input.AlternativePointerUp -= OnRotateEnded;
         }
 
-        private void FixedUpdate() => MoveRB();
-        private void LateUpdate() => Rotate();
+        private void FixedUpdate()
+        {
+            if (gameObject.activeInHierarchy)
+                MoveRB();
+        }
+
+        private void LateUpdate()
+        {
+            if (gameObject.activeInHierarchy)
+                Rotate();
+        }
 
         public void BlockRotating(bool blocked) => _rotatingBlocked = blocked;
 
@@ -85,6 +94,8 @@ namespace Assets.Source.CameraSystem.Scripts
 
         private void Rotate()
         {
+            if (gameObject.activeInHierarchy == false)
+                return;
             if (_rotatingBlocked && _isMobile)
                 return;
 
@@ -95,11 +106,18 @@ namespace Assets.Source.CameraSystem.Scripts
             _cameraPivot.localEulerAngles = Vector3.Lerp(_cameraPivot.localEulerAngles, _cameraPivotAngle * Vector3.up, InterpolationKoef);
         }
 
-        private void OnMove(Vector2 direction) => _targetPosition = new(ConvertValue(direction.x), _targetPosition.y, ConvertValue(direction.y)); 
+        private void OnMove(Vector2 direction)
+        {
+            if (gameObject.activeInHierarchy)
+                _targetPosition = new(ConvertValue(direction.x), _targetPosition.y, ConvertValue(direction.y));
+        }
+
         private void OnRotateEnded(Vector3 position) => _isRotating = false;
 
         private void OnRotate(Vector2 value)
         {
+            if (gameObject.activeInHierarchy == false)
+                return;
             _isRotating = true;
             _cameraAngle -= value.y * _currentConfig.VerticalRotateSensitivity * Time.fixedDeltaTime;
             _cameraAngle = Mathf.Clamp(_cameraAngle, _currentConfig.MinYAngle, _currentConfig.MaxYAngle);
@@ -108,7 +126,7 @@ namespace Assets.Source.CameraSystem.Scripts
 
         private float ConvertValue(float value)
         {
-            if(Mathf.Approximately(value, 0f)) 
+            if (Mathf.Approximately(value, 0f))
                 return 0f;
 
             value = Mathf.Clamp(value, -1f, 1f);

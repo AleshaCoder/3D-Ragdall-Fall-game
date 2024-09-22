@@ -16,6 +16,7 @@ namespace Assets.Source.Entities.Scripts
 
         private bool _isAcceptableAngle = true;
         private List<SpawnChecker> _colliders;
+        private Collider _collider;
 
         public bool CanSpawn => _colliders.Count <= 0 && _isAcceptableAngle;
         public float SpawnAngle => _spawnAngle;
@@ -57,12 +58,13 @@ namespace Assets.Source.Entities.Scripts
             SetView();
             UpdateOriginRotation();
             UpdateOriginScale();
+            _collider = GetComponent<Collider>();
+            _collider.isTrigger = true;
         }
 
         public void SetPosition(Vector3 position, Vector3 normal)
         {
             transform.position = position;
-            //transform.up = normal;
         }
 
         public void SetAngle(bool isAcceptableAngle)
@@ -76,6 +78,8 @@ namespace Assets.Source.Entities.Scripts
             foreach (var mesh in _meshRenderers)
                 mesh.material.color = Color.white;
 
+            _collider.isTrigger = false;
+
             if (withDestroy)
                 Destroy(gameObject);
         }
@@ -83,15 +87,6 @@ namespace Assets.Source.Entities.Scripts
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out SpawnChecker checker))
-            {
-                _colliders.Add(checker);
-                SetView();
-            }
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.transform.TryGetComponent(out SpawnChecker checker))
             {
                 _colliders.Add(checker);
                 SetView();
@@ -107,26 +102,17 @@ namespace Assets.Source.Entities.Scripts
             }
         }
 
-        private void OnCollisionExit(Collision collision)
-        {
-            if (collision.transform.TryGetComponent(out SpawnChecker checker))
-            {
-                _colliders.Remove(checker);
-                SetView();
-            }
-        }
-
         internal void SetView()
         {
             if (CanSpawn)
             {
                 foreach (var mesh in _meshRenderers)
-                    mesh.material.color = Color.green;
+                    mesh.material.color = new Color(0, 1, 0, 0.5f);
             }
             else
             {
                 foreach (var mesh in _meshRenderers)
-                    mesh.material.color = Color.red;
+                    mesh.material.color = new Color(1, 0, 0, 0.5f);
             }
         }
     }

@@ -3,7 +3,8 @@
     "rootNamespace": "RootMotion.Demos",
     "references": [
         "GUID:580ffa8f941aeaa4b88402f610c20a7b",
-        "GUID:bb15009dc431f6d45aa93417beb5dd00"
+        "GUID:bb15009dc431f6d45aa93417beb5dd00",
+        "GUID:eb0718ae2ec6980489781703d44733c3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -35,7 +35,7 @@ namespace Assets.Source.InputService.Scripts
                 OnPointerUp(Input.mousePosition);
 
             if (Input.GetMouseButton(1))
-                OnAlternativeMoving(new(Input.GetAxis(InputConstants.MouseX), Input.GetAxis(InputConstants.MouseY)));
+                OnAlternativeMoving(new(Input.GetAxis(InputConstants.MouseX) *10, Input.GetAxis(InputConstants.MouseY)*10));
 
             if (Input.GetMouseButtonUp(1))
                 OnAlternativeMovingEnded(Input.mousePosition);

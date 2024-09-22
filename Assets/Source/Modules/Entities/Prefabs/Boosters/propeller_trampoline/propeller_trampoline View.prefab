@@ -89,7 +89,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -112,6 +112,7 @@ MonoBehaviour:
   <CanRotateX>k__BackingField: 1
   <CanRotateY>k__BackingField: 1
   <CanRotateZ>k__BackingField: 1
+  <CanScale>k__BackingField: 1
 --- !u!23 &2061614433704471365 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 5852c85d38917454da1eb5586415f597, type: 3}

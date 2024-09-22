@@ -1425,13 +1425,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4749612382349409111}
   - component: {fileID: 8775471983826188344}
+  - component: {fileID: 6240653554253816233}
+  - component: {fileID: 2599879627384735555}
   - component: {fileID: 8483649396216353663}
+  - component: {fileID: 4727533576173346800}
   - component: {fileID: 8138049094319411431}
   - component: {fileID: 2691362687896599380}
-  - component: {fileID: 2599879627384735555}
-  - component: {fileID: 4727533576173346800}
-  - component: {fileID: 6240653554253816233}
-  - component: {fileID: 9115519485321553379}
   m_Layer: 8
   m_Name: Character Controller
   m_TagString: Player
@@ -1470,6 +1469,43 @@ MonoBehaviour:
   text: The character model can be easily replaced if you assign a Humanoid character
     FBX or a ready made ragdoll as the "Replace Character Model" in the CharacterMeleeDemo
     component on the "Character Controller" and click on "Replace".
+--- !u!114 &6240653554253816233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5994452238715520427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5abb5331eb327424cafa20b33288fba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CreatingModel>k__BackingField: {fileID: 0}
+  <Center>k__BackingField: {fileID: 0}
+  <Rigidbody>k__BackingField: {fileID: 8138049094319411431}
+  <PuppetMaster>k__BackingField: {fileID: 0}
+  <Type>k__BackingField: 0
+--- !u!114 &2599879627384735555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5994452238715520427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5218316fa3608d64c8fae0947e120f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkByDefault: 0
+  canCrouch: 0
+  canJump: 1
+  _killing: {fileID: 0}
+  _flyInDead: {fileID: 0}
+  _camera: {fileID: 0}
+  _hook: {fileID: 0}
+  _foot: {fileID: 0}
 --- !u!114 &8483649396216353663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1583,6 +1619,21 @@ MonoBehaviour:
       delay: 0.1
   currentActionIndex: -1
   lastActionTime: 353.8123
+--- !u!114 &4727533576173346800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5994452238715520427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eadbf5fc594bcc42b609d603d82b225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puppetMaster: {fileID: 0}
+  minMovementThreshold: 0.1
+  resurrectionTime: 3
 --- !u!54 &8138049094319411431
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1633,73 +1684,6 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &2599879627384735555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5994452238715520427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5218316fa3608d64c8fae0947e120f6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkByDefault: 0
-  canCrouch: 0
-  canJump: 1
-  _killing: {fileID: 0}
-  _camera: {fileID: 0}
---- !u!114 &4727533576173346800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5994452238715520427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eadbf5fc594bcc42b609d603d82b225, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puppetMaster: {fileID: 0}
-  minMovementThreshold: 0.1
-  resurrectionTime: 3
---- !u!114 &6240653554253816233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5994452238715520427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5abb5331eb327424cafa20b33288fba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <CreatingModel>k__BackingField: {fileID: 9115519485321553379}
-  <Center>k__BackingField: {fileID: 0}
-  <Rigidbody>k__BackingField: {fileID: 8138049094319411431}
-  <PuppetMaster>k__BackingField: {fileID: 0}
-  <Type>k__BackingField: 0
---- !u!114 &9115519485321553379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5994452238715520427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d9a41676e51da54882cd1ab96614640, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _meshRenderers:
-  - {fileID: 584424179882514539}
-  _spawnAngle: 0
-  <CanRotateX>k__BackingField: 0
-  <CanRotateY>k__BackingField: 0
-  <CanRotateZ>k__BackingField: 1
 --- !u!1 &6165514194417627873
 GameObject:
   m_ObjectHideFlags: 0

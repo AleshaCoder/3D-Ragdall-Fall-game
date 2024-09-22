@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace RootMotion.Demos {
 	
@@ -42,7 +43,7 @@ namespace RootMotion.Demos {
 		
 		// Update the Animator with the current state of the character controller
 		protected virtual void Update() {
-			if (Time.deltaTime == 0f) return;
+			if (TimeService.Delta == 0f) return;
 
             animatePhysics = animator.updateMode == AnimatorUpdateMode.AnimatePhysics;
 
@@ -63,10 +64,10 @@ namespace RootMotion.Demos {
 			deltaAngle = 0f;
 			lastForward = transform.forward;
 			angle *= turnSensitivity * 0.01f;
-			angle = Mathf.Clamp(angle / Time.deltaTime, -1f, 1f);
+			angle = Mathf.Clamp(angle / TimeService.Delta, -1f, 1f);
 			
 			// Update Animator params
-			animator.SetFloat("Turn", Mathf.Lerp(animator.GetFloat("Turn"), angle, Time.deltaTime * turnSpeed));
+			animator.SetFloat("Turn", Mathf.Lerp(animator.GetFloat("Turn"), angle, TimeService.Delta * turnSpeed));
 			animator.SetFloat("Forward", characterController.animState.moveDirection.z);
 			animator.SetFloat("Right", characterController.animState.moveDirection.x);
 			animator.SetBool("Crouch", characterController.animState.crouch);

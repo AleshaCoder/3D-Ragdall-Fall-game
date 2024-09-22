@@ -1,5 +1,7 @@
 using UnityEngine;
 using RootMotion.Dynamics;
+using TimeSystem;
+using System.Linq;
 
 namespace RootMotion.Demos
 {
@@ -19,6 +21,7 @@ namespace RootMotion.Demos
 
         private float idleTime = 0f;
         private Vector3 lastPosition;
+        private Muscle baseMuscle;
 
         void Start()
         {
@@ -27,7 +30,8 @@ namespace RootMotion.Demos
                 puppetMaster = GetComponent<PuppetMaster>();
             }
 
-            lastPosition = puppetMaster.transform.position;
+            baseMuscle = puppetMaster.muscles.FirstOrDefault(m => m.props.group == Muscle.Group.Spine);
+            lastPosition = baseMuscle.transform.position;
         }
 
         void Update()
@@ -40,11 +44,11 @@ namespace RootMotion.Demos
 
         private void CheckMovement()
         {
-            float movement = (puppetMaster.transform.position - lastPosition).magnitude;
+            float movement = (baseMuscle.transform.position - lastPosition).magnitude;
 
             if (movement < minMovementThreshold)
             {
-                idleTime += Time.deltaTime;
+                idleTime += TimeService.Delta;
 
                 if (idleTime >= resurrectionTime && puppetMaster.state == PuppetMaster.State.Dead)
                 {
@@ -56,7 +60,7 @@ namespace RootMotion.Demos
                 idleTime = 0f;
             }
 
-            lastPosition = puppetMaster.transform.position;
+            lastPosition = baseMuscle.transform.position;
         }
 
         private void Resurrect()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace ithappy
 {
@@ -53,7 +54,7 @@ namespace ithappy
                 float curveValue = animationCurve.Evaluate(normalizedTime);
                 float newBlendShapeValue = Mathf.Lerp(initialBlendShapeValue, targetValue, curveValue);
                 skinnedMeshRenderer.SetBlendShapeWeight(blendShapeIndex, newBlendShapeValue);
-                elapsedTime += Time.deltaTime;
+                elapsedTime += TimeService.Delta;
                 yield return null;
             }
 

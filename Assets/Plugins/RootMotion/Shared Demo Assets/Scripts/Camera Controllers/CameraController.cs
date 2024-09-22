@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace RootMotion {
 
@@ -97,7 +98,7 @@ namespace RootMotion {
 
 		protected virtual void FixedUpdate() {
 			fixedFrame = true;
-			fixedDeltaTime += Time.deltaTime;
+			fixedDeltaTime += TimeService.Delta;
 			if (updateMode == UpdateMode.FixedUpdate) UpdateTransform();
 		}
 
@@ -136,7 +137,7 @@ namespace RootMotion {
 
 		// Update the camera transform
 		public void UpdateTransform() {
-			UpdateTransform(Time.deltaTime);
+			UpdateTransform(TimeService.Delta);
 		}
 
 		public void UpdateTransform(float deltaTime) {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace RootMotion.Demos {
 
@@ -61,8 +62,8 @@ namespace RootMotion.Demos {
 
 		private void SmoothFollow() {
 			if (smoothFollow) {
-				transform.position = Vector3.Lerp(lastPosition, transform.parent.TransformPoint(localPosition), Time.deltaTime * smoothFollowSpeed);
-				transform.rotation = Quaternion.Lerp(lastRotation, transform.parent.rotation * localRotation, Time.deltaTime * smoothFollowSpeed);
+				transform.position = Vector3.Lerp(lastPosition, transform.parent.TransformPoint(localPosition), TimeService.Delta * smoothFollowSpeed);
+				transform.rotation = Quaternion.Lerp(lastRotation, transform.parent.rotation * localRotation, TimeService.Delta * smoothFollowSpeed);
 			} else
             {
                 transform.localPosition = localPosition;

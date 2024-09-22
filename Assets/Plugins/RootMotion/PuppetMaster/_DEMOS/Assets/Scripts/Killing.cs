@@ -2,6 +2,7 @@
 using System.Collections;
 using RootMotion.Dynamics;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RootMotion.Demos {
 
@@ -22,12 +23,21 @@ namespace RootMotion.Demos {
 		public void Kill()
         {
 			puppetMaster.Kill(stateSettings);
+//Muscle muscle = puppetMaster.muscles.Where(m => m.props.group == Muscle.Group.Spine).Last();
 
-            foreach (var m in _boostBones)
+            //muscle.rigidbody.AddForce((_character.transform.forward * _killForce*3), ForceMode.Impulse);
+
+            foreach (var m in puppetMaster.muscles)
             {
-				m.AddForce((_character.transform.forward * _killForce -_character.transform.up * _killForce/3), ForceMode.Impulse);
+                if (m.props.group == Muscle.Group.Spine)
+                    m.rigidbody.AddForce((_character.transform.forward * _killForce * 3), ForceMode.Impulse);
+				else if (m.props.group == Muscle.Group.Head)
+                    m.rigidbody.AddForce((-_character.transform.forward * _killForce), ForceMode.Impulse);
+                else if (m.props.group == Muscle.Group.Leg)
+                    m.rigidbody.AddForce(( _character.transform.up * _killForce), ForceMode.Impulse);
+                //m.AddForce((_character.transform.forward * _killForce + _character.transform.up * _killForce / 2), ForceMode.Impulse);
             }
-		}
+        }
 
 		void Update () {
 			if (Input.GetKeyDown(KeyCode.F)) puppetMaster.Freeze(stateSettings);

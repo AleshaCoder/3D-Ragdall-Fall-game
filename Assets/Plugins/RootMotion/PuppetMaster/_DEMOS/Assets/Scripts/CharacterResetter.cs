@@ -16,6 +16,7 @@ namespace RootMotion.Demos
         public CharacterMeleeDemo character;
 
         private Dictionary<Transform, TransformState> initialStates = new Dictionary<Transform, TransformState>();
+        private TransformState _defaultPuppet;
 
         [System.Serializable]
         private struct TransformState
@@ -34,6 +35,7 @@ namespace RootMotion.Demos
             // Сохраняем исходное состояние для всех объектов в иерархии
             SaveInitialStates(character.transform);
             SaveInitialStates(puppetMaster.transform);
+            _defaultPuppet = new() { position = puppetMaster.transform.position, rotation = puppetMaster.transform.rotation };
         }
 
         /// <summary>
@@ -58,18 +60,8 @@ namespace RootMotion.Demos
         /// </summary>
         public void ResetCharacter()
         {
-            puppetMaster.state = PuppetMaster.State.Alive;
-            puppetMaster.enabled = false;
-            character.enabled = false;
-
-            ResetRigidbodies(puppetMaster.transform);
-            RestoreInitialStates(character.transform);
             RestoreInitialStates(puppetMaster.transform);
-            character.enabled = true;
-            puppetMaster.enabled = true;
-            ////puppetMaster.Rebuild();
-
-            //puppetMaster.Resurrect();
+            RestoreInitialStates(character.transform);
         }
 
         /// <summary>

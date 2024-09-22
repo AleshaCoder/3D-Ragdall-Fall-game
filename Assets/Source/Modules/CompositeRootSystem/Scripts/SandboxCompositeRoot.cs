@@ -8,6 +8,8 @@ using Assets.Source.GravityGunSystem.Scripts;
 using UnityEngine.UI;
 using RootMotion.Demos;
 using RotationSystem;
+using SkinsSystem;
+using DamageSystem;
 
 namespace Assets.Source.CompositeRootSystem.Scripts
 {
@@ -16,23 +18,23 @@ namespace Assets.Source.CompositeRootSystem.Scripts
         [SerializeField] private SandboxHUD _sandboxHUD;
         [SerializeField] private bool _isMobile;
         [SerializeField] private CameraMover _mover;
-        [SerializeField] private RotateCanvas _selectionCircle;
         [SerializeField] private Camera _camera;
 
-        [SerializeField] private MobileUserControlMelee _mobileUserControlMelee;
-        [SerializeField] private CameraCharacterController _cameraCharacterController;
+        [SerializeField] private SkinSelector _skinSelector;
         [SerializeField] private Joystick _movementJoystick;
         [SerializeField] private Joystick _rotationJoystick;
         [SerializeField] private Button _hookButton;
         [SerializeField] private Button _kickButton;
         [SerializeField] private Button _jumpButton;
         [SerializeField] private Button _killButton;
-        [SerializeField] private CharacterResetter _resetter;
-
+        
+        
         [SerializeField] LayerMask _layerMask;
         [SerializeField] private GravityGunHandler _gravityGunHandler;
 
         private SandboxHUDComponents _hudComponents;
+        private ScoreRepository _scoreRepository;
+        private Damage _damage;
         private GravityGunComponents _gravityGunComponents;
         private InputManager _inputManager;
         private InputHandler _inputHandler;
@@ -43,26 +45,43 @@ namespace Assets.Source.CompositeRootSystem.Scripts
 
         private void Awake()
         {
+            _isMobile = Application.isMobilePlatform;
             _rayCaster = new(_camera);
-            
-            _inputMap = _isMobile ? 
+
+            _inputMap = _isMobile ?
                 new TouchInput(_movementJoystick, _rotationJoystick, _kickButton, _hookButton, _killButton, _jumpButton)
-                : 
-                new KeyboardInput(KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.Q, KeyCode.Space);
+                :
+                new KeyboardInput(KeyCode.F, KeyCode.R, KeyCode.Q, KeyCode.Space);
 
             _inputManager = new(_inputMap);
             _cameraConfigType = _isMobile ? CameraConfigType.Mobile : CameraConfigType.PC;
             _mover.Construct(_inputMap as ICameraInput, _cameraConfigType);
-            _mobileUserControlMelee.Construct(_inputMap);
-            _cameraCharacterController.Construct(_inputMap);
+            _scoreRepository = new();
+
+            UpdateSkin(_skinSelector.ActiveSkin);
+
+            
+
             _itemRotator = new();
             InitializeGravityGun();
             InitializeHUD();
 
+            _scoreRepository.Construct();
+            _skinSelector.OnSkinChanged += UpdateSkin;
+
             _sandboxHUD.ItemsSpawner.ItemPrepared += _itemRotator.SetRotatable;
             _sandboxHUD.ItemsSpawner.Spawned += _itemRotator.FreeRotatable;
             _sandboxHUD.ItemsSpawner.ItemCanceled += _itemRotator.FreeRotatable;
-            _inputHandler = new(_inputMap, _rayCaster, _sandboxHUD.ItemsSpawner, _selectionCircle, _layerMask);
+            _inputHandler = new(_inputMap, _rayCaster, _sandboxHUD.ItemsSpawner, _layerMask);
+        }
+
+        private void UpdateSkin(Skin obj)
+        {
+            Skin activeSkin = _skinSelector.ActiveSkin;
+            activeSkin.MobileUserControlMelee.Construct(_inputMap);
+            activeSkin.CameraCharacterController.Construct(_inputMap);
+            activeSkin.Damage.Construct(_scoreRepository);
+            _damage = activeSkin.Damage;
         }
 
         private void OnDestroy()
@@ -74,13 +93,11 @@ namespace Assets.Source.CompositeRootSystem.Scripts
             _sandboxHUD.ItemsSpawner.ItemPrepared -= _itemRotator.SetRotatable;
             _sandboxHUD.ItemsSpawner.ItemCanceled -= _itemRotator.FreeRotatable;
             _sandboxHUD.ItemsSpawner.Spawned -= _itemRotator.FreeRotatable;
+            _skinSelector.OnSkinChanged -= UpdateSkin;
         }
 
         private void Update()
         {
-            if (_selectionCircle.gameObject.activeSelf)
-                _selectionCircle.Tick();
-
             _gravityGunHandler.Tick();
             _inputManager.Tick();
             _sandboxHUD.ItemsSpawner.Tick();
@@ -100,8 +117,10 @@ namespace Assets.Source.CompositeRootSystem.Scripts
                 Input = _inputMap ?? throw new ArgumentNullException(nameof(_inputMap)),
                 RayCaster = _rayCaster ?? throw new ArgumentNullException(nameof(_rayCaster)),
                 Joystick = _movementJoystick ?? throw new ArgumentNullException(nameof(_movementJoystick)),
-                CharacterResetter = _resetter ?? throw new ArgumentNullException(nameof(_resetter)),
-                ItemRotator = _itemRotator ?? throw new ArgumentNullException(nameof(_itemRotator))
+                ItemRotator = _itemRotator ?? throw new ArgumentNullException(nameof(_itemRotator)),
+                SkinSelector = _skinSelector ?? throw new ArgumentNullException(nameof(_skinSelector)),
+                Score = _scoreRepository ?? throw new ArgumentNullException(nameof(_scoreRepository)),
+                Damage = _damage ?? throw new ArgumentNullException(nameof(_damage))
             };
 
             _sandboxHUD.Construct(_hudComponents);

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace RootMotion.Dynamics {
 
@@ -37,13 +38,13 @@ namespace RootMotion.Dynamics {
         /// </summary>
         public static void Predict(ref Vector3 position, ref Quaternion rotation, ref Vector3 velocity, ref Vector3 angularVelocity, Vector3 gravity, float drag, float angularDrag)
         {
-            velocity += gravity * Time.fixedDeltaTime;
+            velocity += gravity * TimeService.FixedDelta;
 
-            velocity -= velocity * drag * Time.fixedDeltaTime;
-            angularVelocity -= angularVelocity * angularDrag * Time.fixedDeltaTime;
+            velocity -= velocity * drag * TimeService.FixedDelta;
+            angularVelocity -= angularVelocity * angularDrag * TimeService.FixedDelta;
 
-            Vector3 deltaPos = velocity * Time.fixedDeltaTime;
-            Vector3 deltaRot = angularVelocity * Time.fixedDeltaTime * Mathf.Rad2Deg;
+            Vector3 deltaPos = velocity * TimeService.FixedDelta;
+            Vector3 deltaRot = angularVelocity * TimeService.FixedDelta * Mathf.Rad2Deg;
 
             position += deltaPos;
             rotation *= Quaternion.Euler(deltaRot);
@@ -146,7 +147,7 @@ namespace RootMotion.Dynamics {
 			
 			Vector3 requiredAcceleration = requiredAccelerationDeg * axis * Mathf.Deg2Rad;
 			
-			return requiredAcceleration / Time.fixedDeltaTime;
+			return requiredAcceleration / TimeService.FixedDelta;
 		}
 		
 		/// <summary>
@@ -159,7 +160,7 @@ namespace RootMotion.Dynamics {
 			float angle = Quaternion.Angle(fromR, toR);
 			Vector3 acc = Vector3.Normalize(axis + axis2) * angle * Mathf.Deg2Rad;
 			
-			return acc / Time.fixedDeltaTime;
+			return acc / TimeService.FixedDelta;
 		}
 
         /// <summary>
@@ -171,11 +172,11 @@ namespace RootMotion.Dynamics {
 
             switch (forceMode) {
                 case ForceMode.Acceleration:
-                    r.AddTorque(requiredAcceleration / Time.fixedDeltaTime, forceMode);
+                    r.AddTorque(requiredAcceleration / TimeService.FixedDelta, forceMode);
                     break;
 
                 case ForceMode.Force:
-                    Vector3 force = requiredAcceleration / Time.fixedDeltaTime;
+                    Vector3 force = requiredAcceleration / TimeService.FixedDelta;
                     ScaleByInertia(ref force, r.rotation, r.inertiaTensor);
                     r.AddTorque(force, forceMode);
                     break;
@@ -201,11 +202,11 @@ namespace RootMotion.Dynamics {
 			
 			switch(forceMode) {
 			case ForceMode.Acceleration:
-				r.AddTorque(requiredAcceleration / Time.fixedDeltaTime, forceMode);
+				r.AddTorque(requiredAcceleration / TimeService.FixedDelta, forceMode);
 				break;
 				
 			case ForceMode.Force:
-				Vector3 force = requiredAcceleration / Time.fixedDeltaTime;
+				Vector3 force = requiredAcceleration / TimeService.FixedDelta;
 				ScaleByInertia(ref force, r.rotation, r.inertiaTensor);
 				r.AddTorque(force, forceMode);
 				break;
@@ -231,11 +232,11 @@ namespace RootMotion.Dynamics {
 			
 			switch(forceMode) {
 			case ForceMode.Acceleration:
-				r.AddForce(requiredAcceleration / Time.fixedDeltaTime, forceMode);
+				r.AddForce(requiredAcceleration / TimeService.FixedDelta, forceMode);
 				break;
 				
 			case ForceMode.Force:
-				Vector3 force = requiredAcceleration / Time.fixedDeltaTime;
+				Vector3 force = requiredAcceleration / TimeService.FixedDelta;
 				force *= r.mass;
 				r.AddForce(force, forceMode);
 				break;
@@ -256,7 +257,7 @@ namespace RootMotion.Dynamics {
         /// Returns the linear acceleration from one point to another.
         /// </summary>
         public static Vector3 GetLinearAcceleration(Vector3 fromPoint, Vector3 toPoint) {
-            return (toPoint - fromPoint) / Time.fixedDeltaTime;
+            return (toPoint - fromPoint) / TimeService.FixedDelta;
         }
 
         /// <summary>

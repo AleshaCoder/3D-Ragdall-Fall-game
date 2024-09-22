@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using TimeSystem;
 
 namespace RootMotion.Dynamics
 {
@@ -1133,7 +1134,7 @@ namespace RootMotion.Dynamics
             force *= w;
             if (pinDistanceFalloff > 0f) force /= 1f + posOffset.sqrMagnitude * pinDistanceFalloff;
 
-            r.AddForce(force, ForceMode.VelocityChange);
+            r.AddForce(force * TimeService.Scale, ForceMode.VelocityChange);
         }
 
         // Apply Joint targetRotation to match the target rotation

@@ -1,3 +1,4 @@
+using TimeSystem;
 using UnityEngine;
 
 namespace ithappy
@@ -29,7 +30,7 @@ namespace ithappy
         {
             if (timeElapsed < randomDelay)
             {
-                timeElapsed += Time.deltaTime;
+                timeElapsed += TimeService.Delta;
                 return;
             }
 
@@ -42,7 +43,7 @@ namespace ithappy
 
             transform.localScale = currentScale;
 
-            timeElapsed += Time.deltaTime;
+            timeElapsed += TimeService.Delta;
 
             if (timeElapsed >= duration / 2f + randomDelay)
             {

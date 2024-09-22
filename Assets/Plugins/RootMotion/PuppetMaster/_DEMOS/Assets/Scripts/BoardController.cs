@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RootMotion.Dynamics;
+using TimeSystem;
 
 namespace RootMotion.Demos
 {
@@ -28,7 +29,7 @@ namespace RootMotion.Demos
         {
             // Turning the board
             float turn = Input.GetAxis("Horizontal");
-            rotationTarget.rotation = Quaternion.AngleAxis(turn * turnSensitivity * Mathf.Min(r.velocity.sqrMagnitude * 0.2f, 1f) * Time.deltaTime, Vector3.up) * rotationTarget.rotation;
+            rotationTarget.rotation = Quaternion.AngleAxis(turn * turnSensitivity * Mathf.Min(r.velocity.sqrMagnitude * 0.2f, 1f) * TimeService.Delta, Vector3.up) * rotationTarget.rotation;
         }
 
         private void FixedUpdate()
@@ -44,7 +45,7 @@ namespace RootMotion.Demos
                 Vector3 skid = V3Tools.ExtractHorizontal(velocity, r.rotation * Vector3.up, 1f);
                 skid = Vector3.Project(velocity, r.rotation * Vector3.right);
 
-                r.velocity = velocity - Vector3.ClampMagnitude(skid * skidDrag * Time.deltaTime, skid.magnitude);
+                r.velocity = velocity - Vector3.ClampMagnitude(skid * skidDrag * TimeService.Delta, skid.magnitude);
             }
         }
 

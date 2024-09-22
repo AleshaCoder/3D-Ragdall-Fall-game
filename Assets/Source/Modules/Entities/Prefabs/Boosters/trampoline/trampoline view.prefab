@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6523361983512109299, guid: 3a51ac4adfcb862489dc6d7f8ae55dc9, type: 3}
       propertyPath: m_Convex
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6523361983512109299, guid: 3a51ac4adfcb862489dc6d7f8ae55dc9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4175366693906054701, guid: 3a51ac4adfcb862489dc6d7f8ae55dc9, type: 3}
       propertyPath: m_DirtyAABB
@@ -207,7 +211,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30

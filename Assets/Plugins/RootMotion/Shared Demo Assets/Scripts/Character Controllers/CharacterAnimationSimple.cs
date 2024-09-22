@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace RootMotion.Demos {
 	
@@ -33,7 +34,7 @@ namespace RootMotion.Demos {
 			animator.SetFloat("Speed", speed);
 
 			// Movement
-			characterController.Move(characterController.transform.forward * Time.deltaTime * speed, Quaternion.identity);
+			characterController.Move(characterController.transform.forward * TimeService.Delta * speed, Quaternion.identity);
 		}
 	}
 }

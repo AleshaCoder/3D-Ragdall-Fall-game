@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RootMotion;
+using TimeSystem;
 
 namespace RootMotion.Dynamics {
 	
@@ -154,11 +155,11 @@ namespace RootMotion.Dynamics {
 			float fader = 0f;
 
 			while (fader < 1f) {
-				fader += Time.deltaTime;
+				fader += TimeService.Delta;
 
 				foreach (Muscle m in puppetMaster.muscles) {
-					m.state.pinWeightMlp -= Time.deltaTime;
-					m.state.mappingWeightMlp += Time.deltaTime * blendMappingSpeed;
+					m.state.pinWeightMlp -= TimeService.Delta;
+					m.state.mappingWeightMlp += TimeService.Delta * blendMappingSpeed;
 				}
 
 				yield return null;

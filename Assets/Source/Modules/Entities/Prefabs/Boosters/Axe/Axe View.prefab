@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6181700246070921026, guid: e7a7205bdc993c64c8358592b7e053c4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -163,7 +167,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -187,6 +191,7 @@ MonoBehaviour:
   <CanRotateX>k__BackingField: 1
   <CanRotateY>k__BackingField: 1
   <CanRotateZ>k__BackingField: 1
+  <CanScale>k__BackingField: 1
 --- !u!4 &7974675190608520011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 797d3fb4646be524daf7c3834e638584, type: 3}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RootMotion.Dynamics;
+using TimeSystem;
 
 namespace RootMotion.Demos {
 	
@@ -31,7 +32,7 @@ namespace RootMotion.Demos {
 			state.lookPos = moveTarget.position + transform.right * -0.2f;
 
 			// Attacking
-			if (CanAttack()) attackTimer += Time.deltaTime;
+			if (CanAttack()) attackTimer += TimeService.Delta;
 			else attackTimer = 0f;
 
 			state.actionIndex = attackTimer > 0.5f? 1: 0;

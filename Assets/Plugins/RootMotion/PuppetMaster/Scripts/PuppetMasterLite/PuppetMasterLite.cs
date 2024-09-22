@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TimeSystem;
 using UnityEngine;
 
 namespace RootMotion.Dynamics
@@ -77,7 +78,7 @@ namespace RootMotion.Dynamics
 
             while (mappingWeight < 1f)
             {
-                mappingWeight = Mathf.MoveTowards(mappingWeight, 1f, Time.deltaTime * (1f / blendTime));
+                mappingWeight = Mathf.MoveTowards(mappingWeight, 1f, TimeService.Delta * (1f / blendTime));
                 yield return null;
             }
         }
@@ -96,7 +97,7 @@ namespace RootMotion.Dynamics
             { 
                 while (mappingWeight > 0f)
                 {
-                    mappingWeight = Mathf.MoveTowards(mappingWeight, 0f, Time.deltaTime * (1f / blendTime));
+                    mappingWeight = Mathf.MoveTowards(mappingWeight, 0f, TimeService.Delta * (1f / blendTime));
                     yield return null;
                 }
             }
@@ -150,7 +151,7 @@ namespace RootMotion.Dynamics
                 {
                     targetAnimator.enabled = false;
                     animatorDisabled = true;
-                    targetAnimator.Update(Time.fixedDeltaTime);
+                    targetAnimator.Update(TimeService.FixedDelta);
                 }
                 else
                 {

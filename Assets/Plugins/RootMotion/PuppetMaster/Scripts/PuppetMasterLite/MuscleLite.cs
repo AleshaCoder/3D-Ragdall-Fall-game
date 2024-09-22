@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TimeSystem;
 using UnityEngine;
 
 namespace RootMotion.Dynamics
@@ -154,7 +155,7 @@ namespace RootMotion.Dynamics
         public void Read()
         {
             Vector3 tAM = V3Tools.TransformPointUnscaled(target, rigidbody.centerOfMass);
-            targetVelocity = (tAM - targetAnimatedCenterOfMass) / Time.deltaTime;
+            targetVelocity = (tAM - targetAnimatedCenterOfMass) / TimeService.Delta;
             targetAnimatedCenterOfMass = tAM;
 
             if (joint.connectedBody != null)
@@ -181,7 +182,7 @@ namespace RootMotion.Dynamics
             if (w <= 0f) return;
             w = Mathf.Pow(w, pinPow);
 
-            if (Time.deltaTime > 0f) positionOffset /= Time.deltaTime;
+            if (TimeService.Delta > 0f) positionOffset /= TimeService.Delta;
             Vector3 force = -rigidbody.velocity + targetVelocity + positionOffset;
             force *= w;
             if (pinDistanceFalloff > 0f) force /= 1f + positionOffset.sqrMagnitude * pinDistanceFalloff;

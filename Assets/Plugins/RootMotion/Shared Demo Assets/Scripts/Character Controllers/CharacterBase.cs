@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace RootMotion.Demos {
 
@@ -91,8 +92,8 @@ namespace RootMotion.Demos {
 		// Scale the capsule collider to 'mlp' of the initial value
 		protected void ScaleCapsule (float mlp) {
 			if (capsule.height != originalHeight * mlp) {
-				capsule.height = Mathf.MoveTowards (capsule.height, originalHeight * mlp, Time.deltaTime * 4);
-				capsule.center = Vector3.MoveTowards (capsule.center, originalCenter * mlp, Time.deltaTime * 2);
+				capsule.height = Mathf.MoveTowards (capsule.height, originalHeight * mlp, TimeService.Delta * 4);
+				capsule.center = Vector3.MoveTowards (capsule.center, originalCenter * mlp, TimeService.Delta * 2);
 			}
 		}
 

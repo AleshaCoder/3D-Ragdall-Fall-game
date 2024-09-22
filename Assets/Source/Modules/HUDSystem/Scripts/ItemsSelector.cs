@@ -6,6 +6,7 @@ using Assets.Source.ItemSpawnerSystem.Scripts;
 using Assets.Source.HUDSystem.Scripts.MenuButtons;
 using Assets.Source.Structs.Scripts;
 using Assets.Source.Entities.Scripts;
+using SkinsSystem;
 
 namespace Assets.Source.HUDSystem.Scripts
 {
@@ -18,14 +19,18 @@ namespace Assets.Source.HUDSystem.Scripts
         private ISelectableButton _temporarySelectableButton;
         private GameObject _itemsContainer;
         private UnityEngine.UI.Button _selectButton;
+        private SkinSelector _skinSelector;
+        private readonly GameObject _skinsContainer;
 
-        public ItemsSelector(IInputMap input, IRayCaster rayCaster, IItemsSpawner itemsSpawner, GameObject itemsContainer, UnityEngine.UI.Button selectButton)
+        public ItemsSelector(IInputMap input, IRayCaster rayCaster, IItemsSpawner itemsSpawner, GameObject itemsContainer, UnityEngine.UI.Button selectButton, SkinSelector skinSelector, GameObject skinsContainer)
         {
             _input = input ?? throw new ArgumentNullException(nameof(input));
             _rayCaster = rayCaster ?? throw new ArgumentNullException(nameof(rayCaster));
             _itemsSpawner = itemsSpawner ?? throw new ArgumentNullException(nameof(itemsSpawner));
             _itemsContainer = itemsContainer ?? throw new ArgumentNullException(nameof(itemsContainer));
             _selectButton = selectButton ?? throw new ArgumentNullException(nameof(selectButton));
+            _skinSelector = skinSelector;
+            _skinsContainer = skinsContainer;
             _input.PointerUp += OnClickEnded;
             _selectButton.onClick.AddListener(OnSelectItemButtonClick);
         }
@@ -36,7 +41,7 @@ namespace Assets.Source.HUDSystem.Scripts
 
             if (character != null)
             {
-                _itemsSpawner.PrepareRecreateCharacter(character);
+                _itemsSpawner.PrepareRecreateCharacter(character.GetComponentInParent<Skin>());
                 return;
             }
 
@@ -95,6 +100,15 @@ namespace Assets.Source.HUDSystem.Scripts
 
             if (_selectedButton is (IBlockedButton { IsBlocked: false } or RagdollButtonPresenter or ItemsButtonPresenter or WeaponButtonPresenter) and ISelectableButton selectableButton)
                 TrySelectButton(selectableButton);
+
+            if (_selectedButton is CharacterButtonPresenter and IButtonPresenter<RagdollType> characterPresenter)
+                TrySelectSkin(characterPresenter);
+        }
+
+        private void TrySelectSkin(IButtonPresenter<RagdollType> characterPresenter)
+        {
+            _skinSelector.ChangeSkin(characterPresenter.Type);
+            _skinsContainer.SetActive(false);
         }
 
         private void TrySelectButton(ISelectableButton selectableButton)

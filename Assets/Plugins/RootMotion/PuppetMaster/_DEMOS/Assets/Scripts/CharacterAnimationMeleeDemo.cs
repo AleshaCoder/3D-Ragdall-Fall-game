@@ -12,6 +12,8 @@ namespace RootMotion.Demos {
 
 		// Update the Animator with the current state of the character controller
 		protected override void Update() {
+			if (gameObject.activeInHierarchy == false)
+				return;
 			base.Update();
 
 			animator.SetInteger("ActionIndex", -1);

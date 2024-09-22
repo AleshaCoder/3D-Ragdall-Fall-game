@@ -8,19 +8,17 @@ namespace Assets.Source.InputService.Scripts
     public class InputHandler
     {
         private ISpawnerInput _spawner;
-        private RotateCanvas _selectionCirclce;
         private Item _dragItem;
         private IInputMap _inputMap;
         private IRayCaster _raycaster;
         private LayerMask _layerMask;
 
-        public InputHandler(IInputMap inputMap, IRayCaster rayCaster, ISpawnerInput spawner, RotateCanvas selectionCircle, LayerMask layerMask)
+        public InputHandler(IInputMap inputMap, IRayCaster rayCaster, ISpawnerInput spawner, LayerMask layerMask)
         {
             _layerMask = layerMask;
             _raycaster = rayCaster;
             _inputMap = inputMap;
             _spawner = spawner;
-            _selectionCirclce = selectionCircle;
 
             _inputMap.LongClicked += OnLongClicked;
             _inputMap.DoubleClicked += OnDoubleClick;
@@ -42,14 +40,10 @@ namespace Assets.Source.InputService.Scripts
 
         private void OnPress(Vector3 position)
         {
-            if (_raycaster.TryGetAny(position, out RotateButton button) == false)
-                _selectionCirclce.StopRotation();
         }
 
         private void OnEndMove(Vector3 position)
         {
-            if (_selectionCirclce.IsRotating)
-                _selectionCirclce.StopRotation();
         }
 
         private void OnItemSpawned(Item item)
@@ -65,9 +59,6 @@ namespace Assets.Source.InputService.Scripts
         {
             if (_raycaster.TryGetAny(Input.mousePosition, out RotateButton rotateButton))
                 rotateButton.OnPressed();
-
-            if (_selectionCirclce.IsRotating)
-                return;
 
             if (_raycaster.IsNotUIObject(position) == false && _spawner.IsActive)
             {
@@ -85,9 +76,6 @@ namespace Assets.Source.InputService.Scripts
         {
             if (_raycaster.IsNotUIObject(position) == false)
             {
-                if (_selectionCirclce.IsRotating)
-                    return;
-
                 MissClick();
                 return;
             }
@@ -106,9 +94,6 @@ namespace Assets.Source.InputService.Scripts
                 return;
             }
 
-            if (_selectionCirclce.IsRotating)
-                return;
-
             MissClick();
         }
 
@@ -122,8 +107,6 @@ namespace Assets.Source.InputService.Scripts
 
             if (TryGetItem(out Item item))
             {
-                _selectionCirclce.gameObject.SetActive(true);
-                _selectionCirclce.Set(item);
                 return;
             }
 
@@ -147,8 +130,6 @@ namespace Assets.Source.InputService.Scripts
 
         private void MissClick()
         {
-            _selectionCirclce.gameObject.SetActive(false);
-            _selectionCirclce.Set(null);
         }
     }
 }

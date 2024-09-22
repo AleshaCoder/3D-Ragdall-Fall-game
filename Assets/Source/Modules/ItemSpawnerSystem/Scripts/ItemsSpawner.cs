@@ -7,6 +7,8 @@ using Assets.Source.Entities.Scripts;
 using Assets.Source.InputService.Scripts;
 using Assets.Source.RayCasterSystem.Scripts;
 using static ScreenExtensions;
+using SkinsSystem;
+using TimeSystem;
 
 namespace Assets.Source.ItemSpawnerSystem.Scripts
 {
@@ -14,6 +16,7 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
     public class ItemsSpawner : IItemsSpawner, ISpawnerInput
     {
         [SerializeField] private CreatedScriptableObjects _createdScriptableObjects;
+        [SerializeField] private GameObject _gizmo;
         [SerializeField] private Button _removeItemButton;
         [SerializeField] private Button _spawnButton;
         [SerializeField] private Slider _distanceFromItemViewToCamera;
@@ -38,11 +41,12 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
         public event Action ItemCanceled;
         public event Action<IItemCreatingView> ItemPrepared;
 
-        public void Construct(IInputMap input, IRayCaster raycaster, bool isMobile = false)
+        public void Construct(IInputMap input, IRayCaster raycaster, GameObject gizmo, bool isMobile = false)
         {
             _isMobile = isMobile;
             _raycaster = raycaster;
             _input = input;
+            _gizmo = gizmo;
             _spawnQueue = new();
             _removeItemButton.onClick.AddListener(CancelItemCreation);
             _spawnButton.onClick.AddListener(OnTryingSpawn);
@@ -58,14 +62,17 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
         {
             if (_createdScriptableObjects.TryGetCharacter(unit.Type, out Item item))
             {
+                var rotation = unit.transform.rotation;
                 Object.Destroy(unit.gameObject);
-                CreateItem(item);
+                CreateItem(item, rotation);
             }
         }
 
-        public void PrepareRecreateCharacter(MainCharacter character)
+        public void PrepareRecreateCharacter(Skin character)
         {
-            CreateItem(character);
+            character.gameObject.SetActive(false);
+            character.SetDefaultPositionAndRotation();
+            CreateItem(character.GetComponentInChildren<MainCharacter>(), Quaternion.identity);
         }
 
         public void PrepareRecreateItem(Building building)
@@ -73,26 +80,28 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
             if (_createdScriptableObjects.TryGetItem(building.Type, out Item item))
             {
                 Object.Destroy(building.gameObject);
-                CreateItem(item);
+                var rotation = building.transform.rotation;
+                CreateItem(item, rotation);
             }
         }
 
         public void PrepareCreateRagdoll(RagdollType type)
         {
             if (_createdScriptableObjects.TryGetCharacter(type, out Item item))
-                CreateItem(item);
+                CreateItem(item, Quaternion.identity);
         }
 
         public void PrepareCreateItem(ItemsType type)
         {
             if (_createdScriptableObjects.TryGetItem(type, out Item item))
-                CreateItem(item);
+                CreateItem(item, Quaternion.identity);
         }
 
         public void CancelItemCreation()
         {
-            CreateItem(null);
+            CreateItem(null, Quaternion.identity);
             ItemCanceled?.Invoke();
+            TimeService.Scale = 1;
         }
 
         private void UnshowModel(bool obj) => _canShow = false;
@@ -107,19 +116,25 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
                 return;
 
             GetPosition();
-
+            _gizmo.transform.position = _position;
             _itemView.SetPosition(_position, _normal);
             _itemView.SetAngle(CheckAngle());
+
+            if (_item is IDontDestroyableFromScene)
+            {
+                _item.transform.SetPositionAndRotation(_position, _itemView.Rotation);
+            }
         }
 
-        private void CreateItem(Item item)
+        private void CreateItem(Item item, Quaternion rotation)
         {
             if (_itemView != null)
             {
-                _itemView.Dispose(_item is not IDontDestroyableFromScene);
+                _itemView.Dispose(true);
                 _itemView = null;
             }
 
+            _gizmo.SetActive(false);
             _item = item;
             IsActive = item != null;
             _canShow = item != null;
@@ -127,19 +142,17 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
             if (item == null)
                 return;
 
-            if (item is IDontDestroyableFromScene)
-            {
-                _itemView = _item.CreatingModel;
-                _removeItemButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                _itemView = Instantiate(_position, item.CreatingModel, Quaternion.identity);
-                _removeItemButton.gameObject.SetActive(true);
-            }
+            var itemView = Instantiate(_position, item.CreatingModel, rotation);
+            _itemView = itemView;
+
+            _removeItemButton.gameObject.SetActive(item is not IDontDestroyableFromScene);
 
             _itemView.Init();
             _spawnAngle = _itemView.SpawnAngle;
+            _gizmo.SetActive(true);
+
+            _gizmo.transform.eulerAngles = new(-180, 0, 0);
+
             ItemPrepared?.Invoke(_itemView);
         }
 
@@ -160,6 +173,7 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
 
         private void SpawnItem()
         {
+            TimeService.Scale = 1;
             var item = _item;
 
             if (_item is not IDontDestroyableFromScene)
@@ -168,6 +182,15 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
                 item.Init(_spawnQueue.AddItemWithIndex(item));
             }
 
+            _item.transform.root.gameObject.SetActive(true);
+
+            if (_item.transform.root.TryGetComponent<Skin>(out Skin skin))
+            {
+                skin.SetDefaultPositionAndRotation();
+            }
+
+            _gizmo.SetActive(false);
+            _gizmo.transform.parent = null;
             ItemSpawned?.Invoke(item);
             Spawned?.Invoke();
         }

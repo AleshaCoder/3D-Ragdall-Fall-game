@@ -94,7 +94,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -117,3 +117,4 @@ MonoBehaviour:
   <CanRotateX>k__BackingField: 1
   <CanRotateY>k__BackingField: 1
   <CanRotateZ>k__BackingField: 1
+  <CanScale>k__BackingField: 1

@@ -69,7 +69,7 @@ namespace Assets.Source.Entities.Scripts
         private void Dispose()
         {
             Disposed?.Invoke(_spawnedIndex);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
         private void Rotate()

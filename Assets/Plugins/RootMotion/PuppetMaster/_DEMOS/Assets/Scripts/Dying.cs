@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using RootMotion.Dynamics;
+using TimeSystem;
 
 namespace RootMotion.Demos {
 
@@ -69,7 +70,7 @@ namespace RootMotion.Demos {
 		// Fading out puppetMaster.pinWeight to zero
 		private IEnumerator FadeOutPinWeight() {
 			while (puppetMaster.pinWeight > 0f) {
-				puppetMaster.pinWeight = Mathf.MoveTowards(puppetMaster.pinWeight, 0f, Time.deltaTime * fadeOutPinWeightSpeed);
+				puppetMaster.pinWeight = Mathf.MoveTowards(puppetMaster.pinWeight, 0f, TimeService.Delta * fadeOutPinWeightSpeed);
 				yield return null;
 			}
 		}
@@ -77,7 +78,7 @@ namespace RootMotion.Demos {
 		// Fading out puppetMaster.muscleWeight to deadMuscleWeight
 		private IEnumerator FadeOutMuscleWeight() {
 			while (puppetMaster.muscleWeight > 0f) {
-				puppetMaster.muscleWeight = Mathf.MoveTowards(puppetMaster.muscleWeight, deadMuscleWeight, Time.deltaTime * fadeOutMuscleWeightSpeed);
+				puppetMaster.muscleWeight = Mathf.MoveTowards(puppetMaster.muscleWeight, deadMuscleWeight, TimeService.Delta * fadeOutMuscleWeightSpeed);
 				yield return null;
 			}
 		}

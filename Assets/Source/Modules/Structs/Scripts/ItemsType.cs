@@ -16,6 +16,17 @@ namespace Assets.Source.Structs.Scripts
         VRotator,
         Tube,
         AngledTube,
-        SpiralTube
+        SpiralTube,
+        Mine,
+        Column,
+        Cone,
+        Stair,
+        Stair2,
+        Cylinder,
+        Ramp,
+        Ramp2,
+        Ring,
+        Target,
+        TrafficCone
     }
 }

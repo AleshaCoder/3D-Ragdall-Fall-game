@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using RootMotion;
+using TimeSystem;
 
 namespace RootMotion.Dynamics
 {
@@ -956,7 +957,7 @@ namespace RootMotion.Dynamics
 
         protected virtual void FixedUpdate()
         {
-            foreach (BehaviourBase b in behaviours) b.FixedUpdateB(Time.deltaTime);
+            foreach (BehaviourBase b in behaviours) b.FixedUpdateB(TimeService.Delta);
 
             if (!initiated) return;
             if (!autoSimulate) return;
@@ -996,7 +997,7 @@ namespace RootMotion.Dynamics
                 {
                     targetAnimator.enabled = false;
                     animatorDisabled = true;
-                    targetAnimator.Update(Time.fixedDeltaTime);
+                    targetAnimator.Update(TimeService.FixedDelta);//TODO if need
                 }
                 else
                 {
@@ -1010,7 +1011,7 @@ namespace RootMotion.Dynamics
                 }
 
                 if (OnRead != null) OnRead();
-                foreach (BehaviourBase behaviour in behaviours) behaviour.OnRead(Time.deltaTime);
+                foreach (BehaviourBase behaviour in behaviours) behaviour.OnRead(TimeService.Delta);
                 Read();
                 readInFixedUpdate = true;
             }
@@ -1047,7 +1048,7 @@ namespace RootMotion.Dynamics
                 // Update Muscles
                 for (int i = 0; i < muscles.Length; i++)
                 {
-                    muscles[i].Update(pinWeight, muscleWeight, muscleSpring, muscleDamper, pinPow, pinDistanceFalloff, true, angularPinning, Time.fixedDeltaTime);
+                    muscles[i].Update(pinWeight, muscleWeight, muscleSpring, muscleDamper, pinPow, pinDistanceFalloff, true, angularPinning, TimeService.FixedDelta);//TODO
                 }
             }
 
@@ -1057,7 +1058,7 @@ namespace RootMotion.Dynamics
 
         protected virtual void Update()
         {
-            foreach (BehaviourBase b in behaviours) b.UpdateB(Time.deltaTime);
+            foreach (BehaviourBase b in behaviours) b.UpdateB(TimeService.Delta);
 
             if (!initiated) return;
             if (!autoSimulate) return;
@@ -1077,7 +1078,7 @@ namespace RootMotion.Dynamics
 
         protected virtual void LateUpdate()
         {
-            foreach (BehaviourBase b in behaviours) b.LateUpdateB(Time.deltaTime);
+            foreach (BehaviourBase b in behaviours) b.LateUpdateB(TimeService.Delta);
 
             if (!autoSimulate) return;
             if (muscles.Length <= 0) return;
@@ -1120,7 +1121,7 @@ namespace RootMotion.Dynamics
             if (animationApplied)
             {
                 if (OnRead != null) OnRead(); // Update IK
-                foreach (BehaviourBase behaviour in behaviours) behaviour.OnRead(Time.deltaTime);
+                foreach (BehaviourBase behaviour in behaviours) behaviour.OnRead(TimeService.Delta);
             }
             if (muscleRead) Read();
             
@@ -1165,7 +1166,7 @@ namespace RootMotion.Dynamics
                     if (activeMode == Mode.Kinematic) MoveToTarget();
                 }
 
-                foreach (BehaviourBase behaviour in behaviours) behaviour.OnWrite(Time.deltaTime);
+                foreach (BehaviourBase behaviour in behaviours) behaviour.OnWrite(TimeService.Delta);
                 if (OnWrite != null) OnWrite();
 
                 StoreTargetMappedState(); //@todo no need to do this all the time

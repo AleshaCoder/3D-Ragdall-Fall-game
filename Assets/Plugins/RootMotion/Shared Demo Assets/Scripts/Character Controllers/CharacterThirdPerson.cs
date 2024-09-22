@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace RootMotion.Demos {
 
@@ -117,7 +118,7 @@ namespace RootMotion.Demos {
 		// When the Animator moves
 		public override void Move(Vector3 deltaPosition, Quaternion deltaRotation) {
             // Accumulate delta position, update in FixedUpdate to maintain consitency
-            fixedDeltaTime += Time.deltaTime;
+            fixedDeltaTime += TimeService.Delta;
 			fixedDeltaPosition += deltaPosition;
 			fixedDeltaRotation *= deltaRotation;
 		}
@@ -194,7 +195,7 @@ namespace RootMotion.Demos {
             // Fill in animState
 			animState.onGround = onGround;
 			animState.moveDirection = GetMoveDirection();
-			animState.yVelocity = Mathf.Lerp(animState.yVelocity, velocityY, Time.deltaTime * 10f);
+			animState.yVelocity = Mathf.Lerp(animState.yVelocity, velocityY, TimeService.Delta * 10f);
 			animState.crouch = userControl.state.crouch;
 			animState.isStrafing = moveMode == MoveMode.Strafe;
 		}
@@ -207,7 +208,7 @@ namespace RootMotion.Demos {
 			if (!fixedFrame && r.interpolation == RigidbodyInterpolation.None) return;
 			
 			// Update camera only if character moves
-			cam.UpdateTransform(r.interpolation == RigidbodyInterpolation.None? Time.fixedDeltaTime: Time.deltaTime);
+			cam.UpdateTransform(r.interpolation == RigidbodyInterpolation.None? TimeService.FixedDelta: TimeService.Delta);
 			
 			fixedFrame = false;
 		}
@@ -237,12 +238,12 @@ namespace RootMotion.Demos {
                     // Air move
                     //Vector3 airMove = new Vector3 (userControl.state.move.x * airSpeed, 0f, userControl.state.move.z * airSpeed);
                     Vector3 airMove = V3Tools.ExtractHorizontal(userControl.state.move * airSpeed, gravity, 1f);
-                    velocity = Vector3.Lerp(r.velocity, airMove, Time.deltaTime * airControl);
+                    velocity = Vector3.Lerp(r.velocity, airMove, TimeService.Delta * airControl);
                 }				
 
 				if (onGround && Time.time > jumpEndTime)
                 {
-                    r.velocity = r.velocity - transform.up * stickyForce * Time.deltaTime;
+                    r.velocity = r.velocity - transform.up * stickyForce * TimeService.Delta;
                 }
 
                 // Vertical velocity
@@ -277,7 +278,7 @@ namespace RootMotion.Demos {
 			if (wallRunWeight > 0f && !canWallRun) wallRunEndTime = Time.time;
 			if (Time.time < wallRunEndTime + 0.5f) canWallRun = false;
 
-			wallRunWeight = Mathf.MoveTowards(wallRunWeight, (canWallRun? 1f: 0f), Time.deltaTime * wallRunWeightSpeed);
+			wallRunWeight = Mathf.MoveTowards(wallRunWeight, (canWallRun? 1f: 0f), TimeService.Delta * wallRunWeightSpeed);
 			
 			if (wallRunWeight <= 0f) {
 				// Reset
@@ -304,7 +305,7 @@ namespace RootMotion.Demos {
 			Physics.Raycast(onGround? transform.position: capsule.bounds.center, f, out velocityHit, 3f, wallRunLayers);
 			
 			// Finding the normal to rotate to
-			wallNormal = Vector3.Lerp(wallNormal, velocityHit.normal, Time.deltaTime * wallRunRotationSpeed);
+			wallNormal = Vector3.Lerp(wallNormal, velocityHit.normal, TimeService.Delta * wallRunRotationSpeed);
 
 			// Clamping wall normal to max rotation angle
 			wallNormal = Vector3.RotateTowards(-gravity.normalized, wallNormal, wallRunMaxRotationAngle * Mathf.Deg2Rad, 0f);
@@ -333,11 +334,11 @@ namespace RootMotion.Demos {
 			switch(moveMode) {
 			case MoveMode.Directional:
 				moveDirection = Vector3.SmoothDamp(moveDirection, new Vector3(0f, 0f, userControl.state.move.magnitude), ref moveDirectionVelocity, smoothAccelerationTime);
-				moveDirection = Vector3.MoveTowards(moveDirection, new Vector3(0f, 0f, userControl.state.move.magnitude), Time.deltaTime * linearAccelerationSpeed);
+				moveDirection = Vector3.MoveTowards(moveDirection, new Vector3(0f, 0f, userControl.state.move.magnitude), TimeService.Delta * linearAccelerationSpeed);
 				return moveDirection * forwardMlp;
 			case MoveMode.Strafe:
 				moveDirection = Vector3.SmoothDamp(moveDirection, userControl.state.move, ref moveDirectionVelocity, smoothAccelerationTime);
-				moveDirection = Vector3.MoveTowards(moveDirection, userControl.state.move, Time.deltaTime * linearAccelerationSpeed);
+				moveDirection = Vector3.MoveTowards(moveDirection, userControl.state.move, TimeService.Delta * linearAccelerationSpeed);
 				return transform.InverseTransformDirection(moveDirection);
 			}
 
@@ -355,7 +356,7 @@ namespace RootMotion.Demos {
 
 			// Rotating the character
 			//RigidbodyRotateAround(characterAnimation.GetPivotPoint(), transform.up, angle * Time.deltaTime * turnSpeed);
-			r.MoveRotation(Quaternion.AngleAxis(angle * Time.deltaTime * turnSpeed, transform.up) * r.rotation);
+			r.MoveRotation(Quaternion.AngleAxis(angle * TimeService.Delta * turnSpeed, transform.up) * r.rotation);
 		}
 
 		// Which way to look at?
@@ -460,7 +461,7 @@ namespace RootMotion.Demos {
 			}
 
 			// Interpolate the additive velocity of the platform the character might be standing on
-			platformVelocity = Vector3.Lerp(platformVelocity, platformVelocityTarget, Time.deltaTime * platformFriction);
+			platformVelocity = Vector3.Lerp(platformVelocity, platformVelocityTarget, TimeService.Delta * platformFriction);
             if (fullRootMotion) stickyForce = 0f;
 
             stickyForce = stickyForceTarget;//Mathf.Lerp(stickyForce, stickyForceTarget, Time.deltaTime * 5f);

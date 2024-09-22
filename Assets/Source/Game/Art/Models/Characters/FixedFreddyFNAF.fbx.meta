@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: FreddyFNAF
-    second: {fileID: 2100000, guid: f2c0649f56da3b843911d7c5f8c97b0d, type: 2}
+    second: {fileID: 2100000, guid: 7ccd8f5973e1d5c4c9c61e3c2378285f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

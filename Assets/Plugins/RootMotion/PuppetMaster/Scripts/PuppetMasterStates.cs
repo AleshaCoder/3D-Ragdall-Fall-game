@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using TimeSystem;
 
 namespace RootMotion.Dynamics {
 	
@@ -201,7 +202,7 @@ namespace RootMotion.Dynamics {
 				float mW = muscles[0].state.muscleWeightMlp;
 
 				while (mW > stateSettings.deadMuscleWeight) {
-					mW = Mathf.Max(mW - Time.deltaTime * (range / stateSettings.killDuration), stateSettings.deadMuscleWeight);
+					mW = Mathf.Max(mW - TimeService.Delta * (range / stateSettings.killDuration), stateSettings.deadMuscleWeight);
 
 					foreach (Muscle m in muscles) m.state.muscleWeightMlp = mW;
 					

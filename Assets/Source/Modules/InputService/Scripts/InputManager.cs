@@ -1,3 +1,4 @@
+using TimeSystem;
 using UnityEngine;
 
 namespace Assets.Source.InputService.Scripts
@@ -8,6 +9,6 @@ namespace Assets.Source.InputService.Scripts
 
         public InputManager(IInputMap input) => _input = input;
 
-        public void Tick() => _input.Tick(Time.deltaTime);
+        public void Tick() => _input.Tick(TimeService.Delta);
     }
 }

@@ -2,6 +2,7 @@ using Assets.Source.Entities.Scripts;
 using UnityEngine;
 using RootMotion.Dynamics;
 using System.Linq;
+using TimeSystem;
 
 namespace ithappy
 {
@@ -13,19 +14,29 @@ namespace ithappy
         private void OnCollisionEnter(Collision collision)
         {
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
-            PuppetMaster puppetMaster = rb?.GetComponentInParent<PuppetMaster>();
 
-            if (puppetMaster != null && puppetMaster != transform.GetComponentInParent<PuppetMaster>())
+            if (rb != null)
             {
-                Debug.Log("Attack");
-                var muscles = puppetMaster.muscles.Where(m => m.props.group == Muscle.Group.Spine || m.props.group == Muscle.Group.Hips);
-                foreach (var m in muscles)
+                PuppetMaster puppetMaster = rb.GetComponentInParent<PuppetMaster>();
+
+                if (puppetMaster != null && puppetMaster != transform.GetComponentInParent<PuppetMaster>())
                 {
-                    m.rigidbody.AddForce(puppetMaster.transform.rotation * direction * jumpForce, ForceMode.Impulse);
+                    var muscles = puppetMaster.muscles.FirstOrDefault(m => m.props.group == Muscle.Group.Spine);
+                    foreach (var m in puppetMaster.muscles)
+                    {
+                        if (m != muscles)
+                            m.rigidbody.velocity = Vector3.zero;
+                    }
+
+                    if (muscles != default)
+                    {
+                       // muscles.rigidbody.AddForce(transform.up * jumpForce * TimeService.Scale, ForceMode.Impulse);
+                        muscles.rigidbody.velocity = transform.up * jumpForce * TimeService.Scale;
+
+                        Debug.Log(muscles.rigidbody.velocity);
+                    }
                 }
             }
         }
-
-
     }
 }

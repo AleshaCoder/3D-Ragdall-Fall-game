@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SpawnerTest.unity
+    path: Assets/Source/Game/Scenes/Levels/TestLevel.unity
+    guid: 687816b376eab584fbdf85bd1c3e637b
+  - enabled: 0
+    path: Assets/Source/Game/Scenes/SpawnerTest.unity
     guid: e8691cc9d3e08b54e9312cb395f727e8
   m_configObjects: {}

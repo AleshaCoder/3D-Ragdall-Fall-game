@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using TimeSystem;
 
 namespace RootMotion.Dynamics {
 	
@@ -149,7 +150,7 @@ namespace RootMotion.Dynamics {
             {
                 while (mappingBlend < 1f)
                 {
-                    mappingBlend = Mathf.Clamp(mappingBlend + Time.deltaTime / blendTime, 0f, 1f);
+                    mappingBlend = Mathf.Clamp(mappingBlend + TimeService.Delta / blendTime, 0f, 1f);
                     yield return null;
                 }
             } else
@@ -196,7 +197,7 @@ namespace RootMotion.Dynamics {
             {
                 while (mappingBlend < 1f)
                 {
-                    mappingBlend = Mathf.Clamp(mappingBlend + Time.deltaTime / blendTime, 0f, 1f);
+                    mappingBlend = Mathf.Clamp(mappingBlend + TimeService.Delta / blendTime, 0f, 1f);
                     yield return null;
                 }
             }
@@ -215,7 +216,7 @@ namespace RootMotion.Dynamics {
             {
                 while (mappingBlend > 0f)
                 {
-                    mappingBlend = Mathf.Max(mappingBlend - Time.deltaTime / blendTime, 0f);
+                    mappingBlend = Mathf.Max(mappingBlend - TimeService.Delta / blendTime, 0f);
                     yield return null;
                 }
             } else
@@ -240,7 +241,7 @@ namespace RootMotion.Dynamics {
             {
                 while (mappingBlend > 0f)
                 {
-                    mappingBlend = Mathf.Max(mappingBlend - Time.deltaTime / blendTime, 0f);
+                    mappingBlend = Mathf.Max(mappingBlend - TimeService.Delta / blendTime, 0f);
                     yield return null;
                 }
             } else

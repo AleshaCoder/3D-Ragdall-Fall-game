@@ -2,7 +2,8 @@
     "name": "PuppetMaster",
     "rootNamespace": "",
     "references": [
-        "GUID:0acc523941302664db1f4e527237feb3"
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:eb0718ae2ec6980489781703d44733c3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

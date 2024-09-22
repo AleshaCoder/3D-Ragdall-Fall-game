@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TimeSystem;
 
 namespace RootMotion.Demos {
 
@@ -86,7 +87,7 @@ namespace RootMotion.Demos {
 				Vector3 inputVectorRaw = GetInputVectorRaw();
 				if (inputVectorRaw != Vector3.zero) linearTargetDirection = cameraController.transform.rotation * inputVectorRaw;
 
-				forward = Vector3.RotateTowards(forward, linearTargetDirection, Time.deltaTime * (1f /turnTime), 1f);
+				forward = Vector3.RotateTowards(forward, linearTargetDirection, TimeService.Delta * (1f /turnTime), 1f);
 				forward.y = 0f;
 				transform.rotation = Quaternion.LookRotation(forward);
 				break;
@@ -111,7 +112,7 @@ namespace RootMotion.Demos {
 				if (characterController != null) {
 					characterController.SimpleMove(move);
 				} else {
-					transform.position += move * Time.deltaTime;
+                    transform.position += move * TimeService.Delta;
 				}
 			}
 		}

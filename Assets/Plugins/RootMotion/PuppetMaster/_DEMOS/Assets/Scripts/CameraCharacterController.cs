@@ -77,6 +77,11 @@ namespace RootMotion.Demos
             _inputMap.AlternativePointerMoving += Rotate;
         }
 
+        private void OnDestroy()
+        {
+            _inputMap.AlternativePointerMoving -= Rotate;
+        }
+
         private void Rotate(Vector2 direction)
         {
             x += direction.x * rotationSensitivity;

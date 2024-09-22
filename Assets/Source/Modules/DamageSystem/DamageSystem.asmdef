@@ -1,0 +1,16 @@
+{
+    "name": "DamageSystem",
+    "rootNamespace": "DamageSystem",
+    "references": [
+        "GUID:bb15009dc431f6d45aa93417beb5dd00"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

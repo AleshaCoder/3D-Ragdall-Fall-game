@@ -1,3 +1,4 @@
+using TimeSystem;
 using UnityEngine;
 
 namespace ithappy
@@ -29,7 +30,7 @@ namespace ithappy
         {
             if (timeElapsed < randomDelay)
             {
-                timeElapsed += Time.deltaTime;
+                timeElapsed += TimeService.Delta;
                 return;
             }
 
@@ -43,7 +44,7 @@ namespace ithappy
 
             transform.rotation = currentRotation;
 
-            timeElapsed += Time.deltaTime;
+            timeElapsed += TimeService.Delta;
 
             if (timeElapsed >= duration / 2f + randomDelay)
             {

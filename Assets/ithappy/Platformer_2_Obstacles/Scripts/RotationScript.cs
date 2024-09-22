@@ -1,3 +1,4 @@
+using TimeSystem;
 using UnityEngine;
 
 namespace ithappy
@@ -16,7 +17,7 @@ namespace ithappy
 
         void Update()
         {
-            float rotationValue = rotationSpeed * Time.deltaTime;
+            float rotationValue = rotationSpeed * TimeService.Delta;
 
             Vector3 axis = Vector3.zero;
             switch (rotationAxis)

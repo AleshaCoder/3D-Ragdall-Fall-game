@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TimeSystem;
 using UnityEngine;
 
 namespace RootMotion.Dynamics
@@ -43,9 +44,9 @@ namespace RootMotion.Dynamics
             // Calculate target velocity and angular velocity
             if (useTargetVelocity)
             {
-                targetVelocity = (target.position - lastTargetPos) / Time.deltaTime;
+                targetVelocity = (target.position - lastTargetPos) / TimeService.Delta;
 
-                targetAngularVelocity = PhysXTools.GetAngularVelocity(lastTargetRot, target.rotation, Time.deltaTime);
+                targetAngularVelocity = PhysXTools.GetAngularVelocity(lastTargetRot, target.rotation, TimeService.Delta);
             }
 
             lastTargetPos = target.position;
@@ -55,7 +56,7 @@ namespace RootMotion.Dynamics
             Vector3 force = PhysXTools.GetLinearAcceleration(r.position, target.position);
             force += targetVelocity;
             force -= r.velocity;
-            if (r.useGravity) force -= Physics.gravity * Time.deltaTime;
+            if (r.useGravity) force -= Physics.gravity * TimeService.Delta;
             force *= forceWeight;
             r.AddForce(force, ForceMode.VelocityChange);
 
