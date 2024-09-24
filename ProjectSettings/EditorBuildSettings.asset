@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Source/Game/Scenes/Levels/TestLevel.unity
-    guid: 687816b376eab584fbdf85bd1c3e637b
-  - enabled: 0
-    path: Assets/Source/Game/Scenes/SpawnerTest.unity
-    guid: e8691cc9d3e08b54e9312cb395f727e8
+    path: Assets/Source/Game/Scenes/Levels/Menu.unity
+    guid: bf18dd922d62d9b4691fe562d7108528
+  - enabled: 1
+    path: Assets/Source/Game/Scenes/Levels/PlaneLevel.unity
+    guid: 2b7413b38387a4742a57b9d52377607c
+  - enabled: 1
+    path: Assets/Source/Game/Scenes/Levels/100Stairs.unity
+    guid: 90bff4ec799ef99409b4cdce29396263
+  - enabled: 1
+    path: Assets/Source/Game/Scenes/Levels/City.unity
+    guid: aa22f8a1f4e04e540a698f980c0f3a97
   m_configObjects: {}

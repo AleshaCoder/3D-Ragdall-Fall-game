@@ -24,15 +24,15 @@ public class CameraResetter : MonoBehaviour
 
     private void Awake()
     {
-        if (!isInitialized)
-        {
-            defaultLocalPosition = transform.localPosition;
-            defaultPosition = transform.position;
-            localEulerAngles = _cameraPivot.localEulerAngles;
-            localEulerAngles2 = _camera.localEulerAngles;
-            isInitialized = true;
-            Debug.Log("Cam init " + defaultPosition);
-        }
+        //if (!isInitialized)
+        //{
+        //    defaultLocalPosition = transform.localPosition;
+        //    defaultPosition = transform.position;
+        //    localEulerAngles = _cameraPivot.localEulerAngles;
+        //    localEulerAngles2 = _camera.localEulerAngles;
+        //    isInitialized = true;
+        //    Debug.Log("Cam init " + defaultPosition);
+        //}
     }
 
     void OnEnable()

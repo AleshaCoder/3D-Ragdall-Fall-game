@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using GlobalSettings;
 
 namespace Assets.Source.CameraSystem.Scripts
 {
@@ -27,6 +28,8 @@ namespace Assets.Source.CameraSystem.Scripts
         private bool _isMobile = false;
         private bool _rotatingBlocked = false;
 
+        private Camera _characterCamera;
+
         public void Construct(ICameraInput input, CameraConfigType type)
         {
             _input = input ?? throw new ArgumentNullException(nameof(input));
@@ -39,6 +42,23 @@ namespace Assets.Source.CameraSystem.Scripts
             _input.Moving += OnMove;
             _input.AlternativePointerMoving += OnRotate;
             _input.AlternativePointerUp += OnRotateEnded;
+        }
+
+        private void OnEnable()
+        {
+            if (_characterCamera != null)
+            {
+                _rigidbody.position = _characterCamera.transform.position;
+                _cameraAngle = _characterCamera.transform.eulerAngles.x ;
+                _cameraPivotAngle = _characterCamera.transform.eulerAngles.y;
+                _camera.transform.localEulerAngles = new Vector3(_cameraAngle, 0, 0);
+                _cameraPivot.localEulerAngles = _cameraPivotAngle * Vector3.up;
+            }
+        }
+
+        public void SetCharacterCamera(Camera camera)
+        {
+            _characterCamera = camera;
         }
 
         public void Dispose()
@@ -90,7 +110,7 @@ namespace Assets.Source.CameraSystem.Scripts
             _rigidbody.drag = DragValue;
         }
 
-        private void MoveRB() => _rigidbody.velocity = _currentConfig.MovingSpeed * (_targetPosition.z * _camera.transform.forward + _targetPosition.x * _camera.transform.right);
+        private void MoveRB() => _rigidbody.velocity = _currentConfig.MovingSpeed * (Settings.Sensetivity / 100f) * (_targetPosition.z * _camera.transform.forward + _targetPosition.x * _camera.transform.right);
 
         private void Rotate()
         {
@@ -102,8 +122,8 @@ namespace Assets.Source.CameraSystem.Scripts
             if (_isRotating == false)
                 return;
 
-            _camera.transform.localEulerAngles = Vector3.Lerp(_camera.transform.localEulerAngles, _cameraAngle * Vector3.right, InterpolationKoef);
-            _cameraPivot.localEulerAngles = Vector3.Lerp(_cameraPivot.localEulerAngles, _cameraPivotAngle * Vector3.up, InterpolationKoef);
+            _camera.transform.localEulerAngles = Vector3.Lerp(_camera.transform.localEulerAngles, new Vector3(_cameraAngle, 0, 0), InterpolationKoef * (Settings.Sensetivity / 100f));
+            _cameraPivot.localEulerAngles = Vector3.Lerp(_cameraPivot.localEulerAngles, _cameraPivotAngle * Vector3.up, InterpolationKoef * (Settings.Sensetivity / 100f));
         }
 
         private void OnMove(Vector2 direction)
@@ -119,9 +139,10 @@ namespace Assets.Source.CameraSystem.Scripts
             if (gameObject.activeInHierarchy == false)
                 return;
             _isRotating = true;
-            _cameraAngle -= value.y * _currentConfig.VerticalRotateSensitivity * Time.fixedDeltaTime;
+
+            _cameraAngle -= value.y * _currentConfig.VerticalRotateSensitivity * (Settings.Sensetivity / 100f) * Time.fixedDeltaTime;
             _cameraAngle = Mathf.Clamp(_cameraAngle, _currentConfig.MinYAngle, _currentConfig.MaxYAngle);
-            _cameraPivotAngle += value.x * _currentConfig.HorizontalRotateSensitivity * Time.fixedDeltaTime;
+            _cameraPivotAngle += value.x * _currentConfig.HorizontalRotateSensitivity * (Settings.Sensetivity / 100f) * Time.fixedDeltaTime;
         }
 
         private float ConvertValue(float value)

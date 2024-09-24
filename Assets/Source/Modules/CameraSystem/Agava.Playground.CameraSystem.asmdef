@@ -1,7 +1,9 @@
 {
     "name": "CameraSystem",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:ca89ad4ee803efe4491bea57e5f16750"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

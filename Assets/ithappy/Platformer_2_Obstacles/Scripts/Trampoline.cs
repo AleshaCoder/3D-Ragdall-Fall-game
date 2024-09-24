@@ -32,8 +32,6 @@ namespace ithappy
                     {
                        // muscles.rigidbody.AddForce(transform.up * jumpForce * TimeService.Scale, ForceMode.Impulse);
                         muscles.rigidbody.velocity = transform.up * jumpForce * TimeService.Scale;
-
-                        Debug.Log(muscles.rigidbody.velocity);
                     }
                 }
             }

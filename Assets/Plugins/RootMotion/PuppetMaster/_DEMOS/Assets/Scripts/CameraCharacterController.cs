@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Assets.Source.InputService.Scripts;
 using System;
+using GlobalSettings;
 
 namespace RootMotion.Demos
 {
@@ -62,7 +63,7 @@ namespace RootMotion.Demos
         private Vector3 targetDistance, position;
         private Quaternion rotation = Quaternion.identity;
         private Vector3 smoothPosition;
-        private Camera cam;
+        public Camera cam;
         private bool fixedFrame;
         private float fixedDeltaTime;
         private Quaternion r = Quaternion.identity;
@@ -84,8 +85,8 @@ namespace RootMotion.Demos
 
         private void Rotate(Vector2 direction)
         {
-            x += direction.x * rotationSensitivity;
-            y = ClampAngle(y - direction.y * rotationSensitivity, yMinLimit, yMaxLimit);
+            x += direction.x * rotationSensitivity * (Settings.Sensetivity / 100f);
+            y = ClampAngle(y - direction.y * rotationSensitivity * (Settings.Sensetivity / 100f), yMinLimit, yMaxLimit);
 
             distanceTarget = Mathf.Clamp(distanceTarget + zoomAdd, minDistance, maxDistance);
         }
@@ -159,8 +160,8 @@ namespace RootMotion.Demos
             // delta rotation
             if (rotate)
             {
-                x += Input.GetAxis("Mouse X") * rotationSensitivity;
-                y = ClampAngle(y - Input.GetAxis("Mouse Y") * rotationSensitivity, yMinLimit, yMaxLimit);
+                x += Input.GetAxis("Mouse X") * rotationSensitivity * (Settings.Sensetivity / 100f);
+                y = ClampAngle(y - Input.GetAxis("Mouse Y") * rotationSensitivity * (Settings.Sensetivity / 100f), yMinLimit, yMaxLimit);
             }
 
             // Distance

@@ -5,6 +5,7 @@ public class DistanceView : MonoBehaviour
 {
     [SerializeField] private Slider _distanceSlider;
     [SerializeField] private TMPro.TMP_Text _text;
+    [SerializeField] private string _value = " m";
 
     private void OnEnable()
     {
@@ -18,6 +19,6 @@ public class DistanceView : MonoBehaviour
 
     private void ChangeText(float arg0)
     {
-        _text.text = $"{arg0:F2} m";
+        _text.text = $"{arg0:F2}{_value}";
     }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6863914435306199917}
   - component: {fileID: 3091891633124275627}
   - component: {fileID: 6909478485006733296}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stairs2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8727072332680191033}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 64d84d3edc2acd747bbb0413825fa2ef, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

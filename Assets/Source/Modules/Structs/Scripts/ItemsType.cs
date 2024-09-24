@@ -27,6 +27,15 @@ namespace Assets.Source.Structs.Scripts
         Ramp2,
         Ring,
         Target,
-        TrafficCone
+        TrafficCone,
+        Container,
+        Funnel,
+        Barrier1,
+        Barrier2,
+        Barrier3,
+        Barrier4,
+        Barrier5,
+        Fence1,
+        Tile,
     }
 }

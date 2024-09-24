@@ -25,8 +25,12 @@ namespace SceneLoading
         private void OnEnable() =>
             SceneManager.sceneLoaded += FadeOut;
 
-        private void OnDisable() =>
+        private void OnDisable()
+        {
             SceneManager.sceneLoaded -= FadeOut;
+            if (_currentCoroutine != null)
+                StopCoroutine(_currentCoroutine);
+        }
 
         public void FadeIn(UnityAction isDarken) =>
             _currentCoroutine = StartCoroutine(Darken(isDarken));
@@ -62,7 +66,8 @@ namespace SceneLoading
                 yield return null;
             }
 
-            StopCoroutine(_currentCoroutine);
+            if (_currentCoroutine != null)
+                StopCoroutine(_currentCoroutine);
             _image.gameObject.SetActive(false);
         }
     }
