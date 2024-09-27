@@ -34,7 +34,7 @@ MonoBehaviour:
   pinPow: 4
   pinDistanceFalloff: 5
   angularPinning: 0
-  updateJointAnchors: 0
+  updateJointAnchors: 1
   supportTranslationAnimation: 0
   angularLimits: 0
   internalCollisions: 0

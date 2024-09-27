@@ -31,7 +31,7 @@ namespace ithappy
 
                     foreach (var m in muscles)
                     {
-                        m.rigidbody.AddForce(dir * force * TimeService.Scale, ForceMode.Impulse);
+                        m.rigidbody.AddForce(dir * force, ForceMode.Impulse);
                     }
                 }
             }

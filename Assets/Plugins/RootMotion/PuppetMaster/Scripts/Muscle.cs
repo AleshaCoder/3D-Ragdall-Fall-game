@@ -1134,7 +1134,7 @@ namespace RootMotion.Dynamics
             force *= w;
             if (pinDistanceFalloff > 0f) force /= 1f + posOffset.sqrMagnitude * pinDistanceFalloff;
 
-            r.AddForce(force * TimeService.Scale, ForceMode.VelocityChange);
+            r.AddForce(force, ForceMode.VelocityChange);
         }
 
         // Apply Joint targetRotation to match the target rotation

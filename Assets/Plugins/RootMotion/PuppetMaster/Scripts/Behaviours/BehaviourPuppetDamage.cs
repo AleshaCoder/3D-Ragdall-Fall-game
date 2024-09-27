@@ -26,7 +26,7 @@ namespace RootMotion.Dynamics {
 
 			// Add force
 			puppetMaster.muscles[hit.muscleIndex].SetKinematic(false);
-			puppetMaster.muscles[hit.muscleIndex].rigidbody.AddForceAtPosition(hit.force * TimeService.Scale, hit.position);
+			puppetMaster.muscles[hit.muscleIndex].rigidbody.AddForceAtPosition(hit.force, hit.position);
 		}
 
         // When a muscle collides with something (called by the MuscleCollisionBroadcaster component on the muscle).

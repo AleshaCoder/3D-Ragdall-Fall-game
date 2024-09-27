@@ -3,6 +3,7 @@ using System.Collections;
 using RootMotion.Dynamics;
 using System.Collections.Generic;
 using System.Linq;
+using Analytics;
 
 namespace RootMotion.Demos {
 
@@ -37,7 +38,10 @@ namespace RootMotion.Demos {
                     m.rigidbody.AddForce(( _character.transform.up * _killForce), ForceMode.Impulse);
                 //m.AddForce((_character.transform.forward * _killForce + _character.transform.up * _killForce / 2), ForceMode.Impulse);
             }
-        }
+
+			AnalyticsSender.KillCharacter();
+
+		}
 
 		void Update () {
 			if (Input.GetKeyDown(KeyCode.F)) puppetMaster.Freeze(stateSettings);

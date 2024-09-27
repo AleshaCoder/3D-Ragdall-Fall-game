@@ -21,6 +21,8 @@ namespace Assets.Source.HUDSystem.Scripts
         private UnityEngine.UI.Button _selectButton;
         private SkinSelector _skinSelector;
         private readonly GameObject _skinsContainer;
+        private bool _canSelect = true;
+        private Vector3 _lastPosition;
 
         public ItemsSelector(IInputMap input, IRayCaster rayCaster, IItemsSpawner itemsSpawner, GameObject itemsContainer, UnityEngine.UI.Button selectButton, SkinSelector skinSelector, GameObject skinsContainer)
         {
@@ -31,8 +33,15 @@ namespace Assets.Source.HUDSystem.Scripts
             _selectButton = selectButton ?? throw new ArgumentNullException(nameof(selectButton));
             _skinSelector = skinSelector;
             _skinsContainer = skinsContainer;
+            _input.PointerDown += OnClickStart;
             _input.PointerUp += OnClickEnded;
+            //_input.PointerMoving += OnStopClick;
             _selectButton.onClick.AddListener(OnSelectItemButtonClick);
+        }
+
+        private void OnClickStart(Vector3 obj)
+        {
+            _lastPosition = obj;
         }
 
         private void OnSelectItemButtonClick()
@@ -83,6 +92,9 @@ namespace Assets.Source.HUDSystem.Scripts
 
         private void OnClickEnded(Vector3 clickPosition)
         {
+            if (Vector3.Magnitude(_lastPosition - clickPosition) > 0.1f)
+                return;
+
             TryCastButton(clickPosition);
         }
 

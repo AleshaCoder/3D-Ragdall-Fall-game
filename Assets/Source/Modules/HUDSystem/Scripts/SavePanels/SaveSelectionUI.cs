@@ -1,5 +1,6 @@
+using Analytics;
 using SaveLoadSystem;
-using System.Collections;
+using SceneLoading;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,13 +12,17 @@ public class SaveSelectionUI : MonoBehaviour
     public Transform saveListContainer;
     public GameObject saveSelectionPanel;
     public TMP_Text sceneNameText;
+    public SceneLoader sceneLoader;
 
-    private string selectedSceneName;
+    private void OnValidate()
+    {
+        sceneLoader = FindObjectOfType<SceneLoader>();
+    }
 
     public void OpenSaveSelection(string sceneName)
     {
-        selectedSceneName = sceneName;
-        sceneNameText.text = $"—цена: {sceneName}";
+        AnalyticsSender.SelectMap(sceneName);
+        sceneNameText.text = $"Map: {sceneName}";
 
         foreach (Transform child in saveListContainer)
         {
@@ -26,21 +31,31 @@ public class SaveSelectionUI : MonoBehaviour
 
         List<SaveRecord> saves = SaveRecordsManager.GetSavesByScene(sceneName);
 
+        Button startButton = InstatiateButton("New Game");
+        startButton.onClick.AddListener(() => sceneLoader.LoadScene(sceneName));
+        startButton.onClick.AddListener(() => AnalyticsSender.NewGame(sceneName));
+
         foreach (var save in saves)
         {
-            Button button = Instantiate(saveButtonPrefab, saveListContainer);
-            button.GetComponentInChildren<TMP_Text>().text = save.SaveName;
+            Button button = InstatiateButton(save.SaveName);
             button.onClick.AddListener(() => LoadSave(save));
         }
 
         saveSelectionPanel.SetActive(true);
     }
 
+    private Button InstatiateButton(string saveName)
+    {
+        Button button = Instantiate(saveButtonPrefab, saveListContainer);
+        button.GetComponentInChildren<TMP_Text>().text = saveName;
+        return button;
+    }
+
     private void LoadSave(SaveRecord save)
     {
         SceneLoadData.SelectedSave = save;
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(save.SceneName);
+        AnalyticsSender.LoadSavedGame(save.SceneName);
+        sceneLoader.LoadScene(save.SceneName);
     }
 
     public void CloseSaveSelection()

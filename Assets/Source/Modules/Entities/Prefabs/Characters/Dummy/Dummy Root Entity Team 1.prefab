@@ -297,7 +297,7 @@ MonoBehaviour:
     activateOnImpulse: 0
   groundLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 9
   collisionLayers:
     serializedVersion: 2
     m_Bits: 1
@@ -4219,6 +4219,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100118, guid: 959d14bf134f54a6e993fe6ca6e063c0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 773004306117388635}
+    - targetCorrespondingSourceObject: {fileID: 100118, guid: 959d14bf134f54a6e993fe6ca6e063c0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2551830963639646182}
   m_SourcePrefab: {fileID: 100100000, guid: 959d14bf134f54a6e993fe6ca6e063c0, type: 3}
 --- !u!95 &2386132793342718164 stripped
 Animator:
@@ -4305,6 +4308,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80895408f44fce647910c14a5d46f7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2551830963639646182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386132793350095522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eadbf5fc594bcc42b609d603d82b225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puppetMaster: {fileID: 6990987257860396934}
+  minMovementThreshold: 0.1
+  resurrectionTime: 3
 --- !u!4 &2386132793350201088 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400052, guid: 959d14bf134f54a6e993fe6ca6e063c0, type: 3}

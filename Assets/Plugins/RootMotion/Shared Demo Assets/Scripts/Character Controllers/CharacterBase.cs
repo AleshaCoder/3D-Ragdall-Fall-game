@@ -38,7 +38,7 @@ namespace RootMotion.Demos {
 				return (gravityTarget.position - transform.position).normalized * Physics.gravity.magnitude;
 			}
 
-			return Physics.gravity;
+			return Physics.gravity * TimeService.Scale * TimeService.Scale;
 		}
 
 		protected virtual void Start() {

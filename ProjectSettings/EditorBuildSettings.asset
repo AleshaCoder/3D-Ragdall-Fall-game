@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Source/Game/Scenes/Levels/City.unity
     guid: aa22f8a1f4e04e540a698f980c0f3a97
+  - enabled: 1
+    path: Assets/Source/Game/Scenes/Levels/Ice.unity
+    guid: b0f82dc0fefcbe74eaddd260ebf6f82c
+  - enabled: 1
+    path: Assets/Source/Game/Scenes/Levels/Desert.unity
+    guid: b7f87244fe1a68f408d452ee57e28a2a
+  - enabled: 1
+    path: Assets/Source/Game/Scenes/Levels/Moon.unity
+    guid: e8388fd1c0cfe86478c14de4856187c8
   m_configObjects: {}

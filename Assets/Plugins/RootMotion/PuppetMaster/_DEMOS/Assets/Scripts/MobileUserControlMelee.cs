@@ -11,8 +11,8 @@ namespace RootMotion.Demos
         [SerializeField] private Killing _killing;
         [SerializeField] private FlyInDead _flyInDead;
         [SerializeField] private Camera _camera;
-        [SerializeField] private GameObject _hook;
-        [SerializeField] private GameObject _foot;
+        [SerializeField] private CollisionForcer _hook;
+        [SerializeField] private CollisionForcer _foot;
         private IInputMap _input;
         private float _actionDelay = 1f;
         private float _time = 0f;
@@ -26,9 +26,9 @@ namespace RootMotion.Demos
             _input.Jumping += OnJump;
             _input.Attacking += OnAttack;
             _input.Killing += _killing.Kill;
+            _hook.enabled = false;
+            _foot.enabled = false;
             _time = Time.time;
-            _hook.SetActive(false);
-            _foot.SetActive(false);
             _isInited = true;
         }
 
@@ -61,29 +61,38 @@ namespace RootMotion.Demos
             _input.Killing -= _killing.Kill;
         }
 
+        private void OnValidate()
+        {
+            var cf = transform.root.GetComponentsInChildren<CollisionForcer>();
+            _foot = cf[0];
+            _hook = cf[1];
+        }
+
         private void OnAttack(int index)
         {
             if (Time.time - _time > _actionDelay)
             {
                 if (index == 1)
-                    _hook.SetActive(true);
-                else if (index == 2)
-                    _foot.SetActive(true);
+                {
+                    _hook.enabled = true;
+                }
+                else
+                {
+                    _foot.enabled = true;
+                }
 
                 state.actionIndex = index;
                 _time = Time.time;
-
-                StartCoroutine(WaitFinishAttack(index));
             }
+
+            StartCoroutine(WaitEndOfAttack());
         }
 
-        private IEnumerator WaitFinishAttack(int index)
+        private IEnumerator WaitEndOfAttack()
         {
             yield return new WaitForSeconds(1f);
-            if (index == 1)
-                _hook.SetActive(false);
-            else if (index == 2)
-                _foot.SetActive(false);
+            _hook.enabled = false;
+            _foot.enabled = false;
         }
 
         private void OnJump()

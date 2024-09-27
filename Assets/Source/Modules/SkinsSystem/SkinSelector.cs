@@ -1,3 +1,4 @@
+using Analytics;
 using Assets.Source.Structs.Scripts;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace SkinsSystem
             ActiveSkin = newskin;
             ActiveSkin.SetDefaultPositionAndRotation();
 
+            AnalyticsSender.SelectSkin(ragdollType.ToString());
             OnSkinChanged?.Invoke(newskin);
         }
     }

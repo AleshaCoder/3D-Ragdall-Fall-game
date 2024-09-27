@@ -408,7 +408,7 @@ namespace RootMotion.Demos {
             int stepsToTake = 3;
             while (steps < stepsToTake)
             {
-                r.AddForce((jumpVelocity) / stepsToTake, ForceMode.VelocityChange);
+                r.AddForce((jumpVelocity * TimeService.Scale) / stepsToTake, ForceMode.VelocityChange);
                 steps++;
                 yield return new WaitForFixedUpdate();
             }

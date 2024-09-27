@@ -12669,6 +12669,7 @@ GameObject:
   - component: {fileID: 5304635617843249760}
   - component: {fileID: 7664700011181835664}
   - component: {fileID: 2564913038168788288}
+  - component: {fileID: 30546310366614212}
   m_Layer: 8
   m_Name: Character Controller
   m_TagString: Player
@@ -12751,7 +12752,7 @@ MonoBehaviour:
   spherecastRadius: 0.1
   groundLayers:
     serializedVersion: 2
-    m_Bits: 18
+    m_Bits: 9
   characterAnimation: {fileID: 3814171887206554643}
   userControl: {fileID: 3698653494874118150}
   cam: {fileID: 0}
@@ -12834,6 +12835,21 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &30546310366614212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507761774450433890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eadbf5fc594bcc42b609d603d82b225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puppetMaster: {fileID: 6653727300971326788}
+  minMovementThreshold: 0.1
+  resurrectionTime: 3
 --- !u!1 &6847168084832450391
 GameObject:
   m_ObjectHideFlags: 0
@@ -13102,7 +13118,7 @@ MonoBehaviour:
     activateOnImpulse: 0
   groundLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 9
   collisionLayers:
     serializedVersion: 2
     m_Bits: 515

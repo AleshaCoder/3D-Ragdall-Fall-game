@@ -37,5 +37,8 @@ namespace Assets.Source.Structs.Scripts
         Barrier5,
         Fence1,
         Tile,
+        Rotator2,
+        Rotator,
+        JumpTile
     }
 }

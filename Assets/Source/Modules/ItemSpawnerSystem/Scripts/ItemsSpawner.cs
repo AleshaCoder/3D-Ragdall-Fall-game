@@ -9,6 +9,7 @@ using Assets.Source.RayCasterSystem.Scripts;
 using static ScreenExtensions;
 using SkinsSystem;
 using TimeSystem;
+using Analytics;
 
 namespace Assets.Source.ItemSpawnerSystem.Scripts
 {
@@ -65,6 +66,7 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
                 var rotation = unit.transform.rotation;
                 Object.Destroy(unit.gameObject);
                 CreateItem(item, rotation);
+                AnalyticsSender.SelectItem(unit.Type.ToString());
             }
         }
 
@@ -82,19 +84,26 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
                 Object.Destroy(building.gameObject);
                 var rotation = building.transform.rotation;
                 CreateItem(item, rotation);
+                AnalyticsSender.SelectItem(building.Type.ToString());
             }
         }
 
         public void PrepareCreateRagdoll(RagdollType type)
         {
             if (_createdScriptableObjects.TryGetCharacter(type, out Item item))
+            {
                 CreateItem(item, Quaternion.identity);
+                AnalyticsSender.SelectItem(type.ToString());
+            }
         }
 
         public void PrepareCreateItem(ItemsType type)
         {
             if (_createdScriptableObjects.TryGetItem(type, out Item item))
+            {
+                AnalyticsSender.SelectItem(type.ToString());
                 CreateItem(item, Quaternion.identity);
+            }
         }
 
         public void CancelItemCreation()
@@ -175,7 +184,6 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
         {
             TimeService.Scale = 1;
             var item = _item;
-
             if (_item is not IDontDestroyableFromScene)
             {
                 item = InstantiateItem(_position, _item, _itemView.Rotation);
@@ -192,6 +200,7 @@ namespace Assets.Source.ItemSpawnerSystem.Scripts
             _gizmo.SetActive(false);
             _gizmo.transform.parent = null;
             ItemSpawned?.Invoke(item);
+            AnalyticsSender.SpawnItem(item.name);
             Spawned?.Invoke();
         }
 

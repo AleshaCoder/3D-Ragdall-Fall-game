@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using Assets.Source.Entities.Scripts;
 using SkinsSystem;
 using DamageSystem;
+using Analytics;
 
 namespace Assets.Source.HUDSystem.Scripts
 {
@@ -79,6 +80,11 @@ namespace Assets.Source.HUDSystem.Scripts
 
         private void OnExitEditor()
         {
+            AnalyticsSender.CloseEditorMenu();
+
+            if (_skinSelector.ActiveSkin.gameObject.activeInHierarchy == false)
+                _skinSelector.ChangeSkin(_skinSelector.ActiveSkin.RagdollType);
+
             _itemsSpawner.CancelItemCreation();
             _skinSelector.ActiveSkin.CameraCharacterController.gameObject.SetActive(true);
             _skinSelector.ActiveSkin.CharacterMeleeDemo.enabled = true;
@@ -87,6 +93,7 @@ namespace Assets.Source.HUDSystem.Scripts
 
         private void OnEnterEditor()
         {
+            AnalyticsSender.OpenEditorMenu();
             _skinSelector.ActiveSkin.CameraCharacterController.gameObject.SetActive(false);
             _skinSelector.ActiveSkin.CharacterMeleeDemo.enabled = false;
             _skinSelector.ActiveSkin.CharacterMeleeDemo.GetComponent<Rigidbody>().isKinematic = true;
@@ -103,6 +110,7 @@ namespace Assets.Source.HUDSystem.Scripts
 
         private void OnReset()
         {
+            AnalyticsSender.ResetCharacter();
             _skinSelector.ChangeSkin(_skinSelector.ActiveSkin.RagdollType);
         }
 
@@ -113,6 +121,7 @@ namespace Assets.Source.HUDSystem.Scripts
 
         private void OnTimeScaleButtonClick()
         {
+            AnalyticsSender.TimeScaleChanged();
             _timeScaleSlider.gameObject.SetActive(!_timeScaleSlider.gameObject.activeInHierarchy);
         }
 

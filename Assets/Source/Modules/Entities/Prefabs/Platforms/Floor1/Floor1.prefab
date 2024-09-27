@@ -17,6 +17,18 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: efecce0669e04d14aada7871935a434d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: efecce0669e04d14aada7871935a434d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: efecce0669e04d14aada7871935a434d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: efecce0669e04d14aada7871935a434d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.678296
       objectReference: {fileID: 0}
@@ -73,9 +85,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: efecce0669e04d14aada7871935a434d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4516933206797634526}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: efecce0669e04d14aada7871935a434d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7689575752742800753}
   m_SourcePrefab: {fileID: 100100000, guid: efecce0669e04d14aada7871935a434d, type: 3}
 --- !u!1 &3147065615973498800 stripped
 GameObject:
@@ -147,18 +156,6 @@ MonoBehaviour:
   <Rigidbody>k__BackingField: {fileID: 5199538208084770446}
   <PuppetMaster>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 34
---- !u!114 &7689575752742800753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147065615973498800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80895408f44fce647910c14a5d46f7c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &3147065615973720976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: efecce0669e04d14aada7871935a434d, type: 3}

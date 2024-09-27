@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3436817662121887605}
   - component: {fileID: 1262260416878330720}
   - component: {fileID: 7901539095865372383}
-  - component: {fileID: 4126873618599860027}
   m_Layer: 3
   m_Name: ContainerLow
   m_TagString: Untagged
@@ -152,15 +151,3 @@ MonoBehaviour:
   <Rigidbody>k__BackingField: {fileID: 1262260416878330720}
   <PuppetMaster>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 26
---- !u!114 &4126873618599860027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311691233274634196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80895408f44fce647910c14a5d46f7c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

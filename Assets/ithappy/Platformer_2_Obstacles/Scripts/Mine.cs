@@ -22,31 +22,35 @@ namespace ithappy
             if (rb != null)
             {
                 PuppetMaster puppetMaster = rb.GetComponentInParent<PuppetMaster>();
-                puppetMaster.Kill();
-                var damage = puppetMaster.transform.root.GetComponentInChildren<Damage>();
 
-
-                if (puppetMaster != null && puppetMaster != transform.GetComponentInParent<PuppetMaster>())
+                if (puppetMaster != null)
                 {
-                    var muscles = puppetMaster.muscles.Where(m => m.props.group == Muscle.Group.Spine || m.props.group == Muscle.Group.Foot);
+                    puppetMaster.Kill();
+                    var damage = puppetMaster.transform.root.GetComponentInChildren<Damage>();
 
-                    Vector3 dir = direction;
 
-                    if (director != null)
-                        dir = (director.position - transform.position).normalized;
-
-                    foreach (var m in muscles)
+                    if (puppetMaster != null && puppetMaster != transform.GetComponentInParent<PuppetMaster>())
                     {
-                        m.rigidbody.AddForce(dir * force * TimeService.Scale, ForceMode.Impulse);
-                        BodyPartType bodyPartType = m.props.group == Muscle.Group.Spine ? BodyPartType.Body : BodyPartType.Leg;
-                        damage.TakeDamage(force, bodyPartType);
+                        var muscles = puppetMaster.muscles.Where(m => m.props.group == Muscle.Group.Spine || m.props.group == Muscle.Group.Foot);
+
+                        Vector3 dir = direction;
+
+                        if (director != null)
+                            dir = (director.position - transform.position).normalized;
+
+                        foreach (var m in muscles)
+                        {
+                            m.rigidbody.AddForce(dir * force, ForceMode.Impulse);
+                            BodyPartType bodyPartType = m.props.group == Muscle.Group.Spine ? BodyPartType.Body : BodyPartType.Leg;
+                            damage.TakeDamage(force, bodyPartType);
+                        }
                     }
+                    audioSource.Play();
+                    explosion.Play();
+                    //gameObject.SetActive(false);
+                    mineRendrer.enabled = false;
+                    Destroy(gameObject, 1f);
                 }
-                audioSource.Play();
-                explosion.Play();
-                //gameObject.SetActive(false);
-                mineRendrer.enabled = false;
-                Destroy(gameObject, 1f);
             }
         }
     }

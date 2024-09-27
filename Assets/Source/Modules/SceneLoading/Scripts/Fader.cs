@@ -68,7 +68,7 @@ namespace SceneLoading
 
             if (_currentCoroutine != null)
                 StopCoroutine(_currentCoroutine);
-            _image.gameObject.SetActive(false);
+            //_image.gameObject.SetActive(false);
         }
     }
 }

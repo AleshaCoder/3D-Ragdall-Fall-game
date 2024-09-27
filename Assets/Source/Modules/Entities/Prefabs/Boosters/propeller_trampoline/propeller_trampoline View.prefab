@@ -62,38 +62,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5852c85d38917454da1eb5586415f597, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9088114302332349247}
+      addedObject: {fileID: 3421279083180941760}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5852c85d38917454da1eb5586415f597, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3421279083180941760}
+      addedObject: {fileID: 3337955277826617497}
   m_SourcePrefab: {fileID: 100100000, guid: 5852c85d38917454da1eb5586415f597, type: 3}
 --- !u!1 &548505770743450256 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5852c85d38917454da1eb5586415f597, type: 3}
   m_PrefabInstance: {fileID: 819029262071199681}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &9088114302332349247
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548505770743450256}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6330629088717627501, guid: 5852c85d38917454da1eb5586415f597, type: 3}
 --- !u!114 &3421279083180941760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,6 +91,27 @@ MonoBehaviour:
   <CanRotateY>k__BackingField: 1
   <CanRotateZ>k__BackingField: 1
   <CanScale>k__BackingField: 1
+--- !u!65 &3337955277826617497
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548505770743450256}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 4.158057, y: 0.27864772, z: 4.158057}
+  m_Center: {x: 0.00000023841858, y: -0.000000007450581, z: -0.00000023841858}
 --- !u!23 &2061614433704471365 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 5852c85d38917454da1eb5586415f597, type: 3}

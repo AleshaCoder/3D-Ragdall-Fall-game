@@ -31,7 +31,7 @@ namespace RootMotion.Demos
                 return;
 
             // Применяем силу к главной части тела в указанном направлении.
-            Vector3 force = direction.normalized * forceMultiplier;
+            Vector3 force = direction.normalized * forceMultiplier * TimeSystem.TimeService.Scale;
             mainBody.AddForce(force, ForceMode.Acceleration);
         }
     }

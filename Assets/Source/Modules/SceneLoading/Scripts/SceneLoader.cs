@@ -18,5 +18,6 @@ namespace SceneLoading
         public void LoadPlaneScene() => _fader.FadeIn(() => SceneManager.LoadScene(SceneNames.PlaneScene));
         public void LoadStairsScene() => _fader.FadeIn(() => SceneManager.LoadScene(SceneNames.StairsScene));
         public void LoadCityScene() => _fader.FadeIn(() => SceneManager.LoadScene(SceneNames.CityScene));
+        public void LoadScene(string sceneName) => _fader.FadeIn(() => SceneManager.LoadScene(sceneName));
     }
 }

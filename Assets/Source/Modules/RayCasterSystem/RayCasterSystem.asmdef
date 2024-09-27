@@ -1,0 +1,17 @@
+{
+    "name": "RayCasterSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6b946f1eb14e846498e3a2a08cf82d42",
+        "GUID:34925d76d5b32814fab934af86b9cde8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -60,6 +60,9 @@ namespace Assets.Source.Entities.Scripts
             UpdateOriginScale();
             _collider = GetComponent<Collider>();
             _collider.isTrigger = true;
+            _colliders.Clear();
+            _isAcceptableAngle = true;
+            Debug.Log("Can spawn " + CanSpawn);
         }
 
         public void SetPosition(Vector3 position, Vector3 normal)
@@ -88,8 +91,10 @@ namespace Assets.Source.Entities.Scripts
         {
             if (other.TryGetComponent(out SpawnChecker checker))
             {
-                _colliders.Add(checker);
+                if (_colliders.Contains(checker) == false)
+                    _colliders.Add(checker);
                 SetView();
+                Debug.Log(_colliders.Count + " " + other.name);
             }
         }
 
@@ -99,11 +104,21 @@ namespace Assets.Source.Entities.Scripts
             {
                 _colliders.Remove(checker);
                 SetView();
+
+                Debug.Log(_colliders.Count + " out " + other.name);
             }
         }
 
         internal void SetView()
         {
+            string cols = "";
+
+            foreach (var item in _colliders)
+            {
+                cols += item.name + " ";
+            }
+
+            Debug.Log($"Can spawn {CanSpawn}. Angle {_isAcceptableAngle}. {_colliders.Count}: {cols}");
             if (CanSpawn)
             {
                 foreach (var mesh in _meshRenderers)

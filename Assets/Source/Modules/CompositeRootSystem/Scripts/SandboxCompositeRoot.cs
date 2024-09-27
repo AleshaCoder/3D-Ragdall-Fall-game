@@ -60,7 +60,7 @@ namespace Assets.Source.CompositeRootSystem.Scripts
             _inputMap = _isMobile ?
                 new TouchInput(_movementJoystick, _rotationJoystick, _kickButton, _hookButton, _killButton, _jumpButton)
                 :
-                new KeyboardInput(KeyCode.F, KeyCode.R, KeyCode.Q, KeyCode.Space);
+                new KeyboardInput(KeyCode.Y, KeyCode.R, KeyCode.Q, KeyCode.Space);
 
             _inputManager = new(_inputMap);
             _cameraConfigType = _isMobile ? CameraConfigType.Mobile : CameraConfigType.PC;

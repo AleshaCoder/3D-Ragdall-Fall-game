@@ -1,8 +1,6 @@
-using Assets.Source.Entities.Scripts;
 using UnityEngine;
 using RootMotion.Dynamics;
 using System.Linq;
-using TimeSystem;
 
 namespace ithappy
 {
@@ -31,7 +29,7 @@ namespace ithappy
                     if (muscles != default)
                     {
                        // muscles.rigidbody.AddForce(transform.up * jumpForce * TimeService.Scale, ForceMode.Impulse);
-                        muscles.rigidbody.velocity = transform.up * jumpForce * TimeService.Scale;
+                        muscles.rigidbody.velocity = transform.up * jumpForce;
                     }
                 }
             }

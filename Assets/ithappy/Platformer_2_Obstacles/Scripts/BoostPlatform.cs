@@ -24,7 +24,7 @@ namespace ithappy
                     foreach (var m in muscles)
                     {
                         var boostDirection = (director.position - transform.position).normalized;
-                        m.rigidbody.AddForce(boostDirection.normalized * boostForce * TimeService.Scale, ForceMode.Impulse);
+                        m.rigidbody.AddForce(boostDirection.normalized * boostForce, ForceMode.Impulse);
                     }
                 }
             }

@@ -44,19 +44,22 @@ public class CenterPivotEditor : Editor
         MeshFilter meshFilter = targetTransform.GetComponent<MeshFilter>();
         if (meshFilter != null)
         {
-            Mesh mesh = meshFilter.sharedMesh;
-            Vector3[] vertices = mesh.vertices;
+            // Clone the original mesh to avoid modifying the original asset
+            Mesh originalMesh = meshFilter.sharedMesh;
+            Mesh newMesh = Instantiate(originalMesh);
+            newMesh.name = originalMesh.name + "_Modified";
+
+            Vector3[] vertices = newMesh.vertices;
 
             for (int i = 0; i < vertices.Length; i++)
             {
                 vertices[i] -= localCenterOffset;
             }
 
-            mesh.vertices = vertices;
-            mesh.RecalculateBounds();
+            newMesh.vertices = vertices;
+            newMesh.RecalculateBounds();
 
-
-            // Step 6: Reset rotation to Vector3.zero and adjust mesh orientation
+            // Step 6: Reset rotation to Quaternion.identity and adjust mesh orientation
             targetTransform.rotation = Quaternion.identity;
 
             // Step 7: Reset scale to Vector3.one and adjust mesh size
@@ -65,13 +68,37 @@ public class CenterPivotEditor : Editor
             // Step 8: Adjust vertices to maintain original scale and rotation
             for (int i = 0; i < vertices.Length; i++)
             {
-                // Apply original scale and rotation inversely to match the reset state
                 vertices[i] = Vector3.Scale(vertices[i], originalScale);
                 vertices[i] = originalRotation * vertices[i];
             }
 
-            mesh.vertices = vertices;
-            mesh.RecalculateBounds();
+            newMesh.vertices = vertices;
+            newMesh.RecalculateBounds();
+
+            // Assign the new mesh
+            meshFilter.sharedMesh = newMesh;
+
+            // Get the asset path of the original mesh
+            string originalMeshPath = AssetDatabase.GetAssetPath(originalMesh);
+
+            if (!string.IsNullOrEmpty(originalMeshPath))
+            {
+                // Extract the directory from the original mesh path
+                string directory = System.IO.Path.GetDirectoryName(originalMeshPath);
+
+                // Create the path for the new mesh
+                string newMeshPath = System.IO.Path.Combine(directory, newMesh.name + ".asset");
+
+                // Save the new mesh asset to the same directory as the original
+                AssetDatabase.CreateAsset(newMesh, newMeshPath);
+                AssetDatabase.SaveAssets();
+
+                Debug.Log("Mesh saved at: " + newMeshPath);
+            }
+            else
+            {
+                Debug.LogWarning("Original mesh path not found. Mesh not saved.");
+            }
         }
     }
 }

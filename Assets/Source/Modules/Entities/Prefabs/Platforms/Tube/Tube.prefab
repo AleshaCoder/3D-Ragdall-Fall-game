@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 701b6b68c863db4408f62a3eba1e0889, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.14
+      value: -0.41
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 701b6b68c863db4408f62a3eba1e0889, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.810011
+      value: 16.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 701b6b68c863db4408f62a3eba1e0889, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.4499989
+      value: 7.27
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 701b6b68c863db4408f62a3eba1e0889, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tube
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 701b6b68c863db4408f62a3eba1e0889, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -85,7 +89,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3663750339774652626}
-  m_Material: {fileID: 13400000, guid: a3fd0ffcf0d0a384ba3568687a96ab8e, type: 2}
+  m_Material: {fileID: 13400000, guid: 64d84d3edc2acd747bbb0413825fa2ef, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -114,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CreatingModel>k__BackingField: {fileID: 6806482523438378041, guid: 299480cde0eac4e49ba3820014db76fe, type: 3}
   <Center>k__BackingField: {fileID: 4148819288382012008}
-  <Rigidbody>k__BackingField: {fileID: 0}
+  <Rigidbody>k__BackingField: {fileID: 6736540254000065290}
   <PuppetMaster>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 12
 --- !u!114 &7420846293986935149

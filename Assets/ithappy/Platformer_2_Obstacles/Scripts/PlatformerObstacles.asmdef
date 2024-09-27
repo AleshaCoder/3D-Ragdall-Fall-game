@@ -1,0 +1,18 @@
+{
+    "name": "PlatformerObstacles",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eb0718ae2ec6980489781703d44733c3",
+        "GUID:bb15009dc431f6d45aa93417beb5dd00",
+        "GUID:0bb62ce50c7c4814c814debc8d160a75"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

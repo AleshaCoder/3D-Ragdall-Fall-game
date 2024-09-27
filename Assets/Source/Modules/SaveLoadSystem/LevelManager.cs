@@ -1,4 +1,5 @@
-﻿using Assets.Source.Entities.Scripts;
+﻿using Analytics;
+using Assets.Source.Entities.Scripts;
 using SkinsSystem;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +15,26 @@ namespace SaveLoadSystem
             _itemFactory = itemFactory;
         }
 
+        private void OnApplicationPause(bool pause)
+        {
+            if (pause)
+            {
+                Debug.Log("Application paused, saving level...");
+                Autosave();
+            }
+        }
+
+        public void Autosave()
+        {
+            SaveLevel("Autosave ");
+        }
+
         public void SaveLevel(string saveName)
         {
             SaveData saveData = new SaveData
             {
-                SaveName = saveName,
                 SceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
+                SaveName = saveName + " " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
                 Items = new List<BuildingData>(),
                 Enemies = new List<EnemyData>(),
                 Skins = new List<SkinData>()
@@ -62,6 +77,9 @@ namespace SaveLoadSystem
 
             SaveLoadSystem.Save(saveData);
 
+            if (saveName.Contains("Autosave") == false)
+                AnalyticsSender.SaveMap();
+
             string savePath = SaveLoadSystem.GetSavePath(saveData.SaveName);
             SaveRecordsManager.AddSaveRecord(saveData.SaveName, saveData.SceneName, savePath);
         }
@@ -70,6 +88,8 @@ namespace SaveLoadSystem
         {
             SaveData saveData = SaveLoadSystem.Load(saveName);
             if (saveData == null) return;
+
+            AnalyticsSender.LoadMap();
 
             foreach (Building item in FindObjectsOfType<Building>())
             {

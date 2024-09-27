@@ -13402,6 +13402,7 @@ GameObject:
   - component: {fileID: 5966974346041899447}
   - component: {fileID: 8059543835995139322}
   - component: {fileID: 4709139487648898932}
+  - component: {fileID: 4551452390972933539}
   m_Layer: 8
   m_Name: Character Controller
   m_TagString: Player
@@ -13484,7 +13485,7 @@ MonoBehaviour:
   spherecastRadius: 0.1
   groundLayers:
     serializedVersion: 2
-    m_Bits: 18
+    m_Bits: 9
   characterAnimation: {fileID: 1003057091656359655}
   userControl: {fileID: 8525199959971076394}
   cam: {fileID: 0}
@@ -13567,6 +13568,21 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &4551452390972933539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5291406463444884289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eadbf5fc594bcc42b609d603d82b225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puppetMaster: {fileID: 8313541051822714537}
+  minMovementThreshold: 0.1
+  resurrectionTime: 3
 --- !u!1 &5457194711702038750
 GameObject:
   m_ObjectHideFlags: 0
@@ -14703,11 +14719,11 @@ MonoBehaviour:
     activateOnImpulse: 0
   groundLayers:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 9
   collisionLayers:
     serializedVersion: 2
     m_Bits: 515
-  collisionThreshold: 0.1
+  collisionThreshold: 0
   collisionResistance:
     mode: 1
     floatValue: 700
@@ -16446,7 +16462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523321df943a6bd4ca507789e392271a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CreatingModel>k__BackingField: {fileID: 781276847517379970, guid: 5221b9cab57b00a4baf9b6ab78e22231, type: 3}
+  <CreatingModel>k__BackingField: {fileID: 8481261058315448280, guid: bfd9e4bde17a4f54695414a09d4dcccf, type: 3}
   <Center>k__BackingField: {fileID: 2232253963500572075}
   <Rigidbody>k__BackingField: {fileID: 8059543835995139322}
   <PuppetMaster>k__BackingField: {fileID: 8313541051822714537}

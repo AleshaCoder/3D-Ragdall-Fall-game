@@ -3,13 +3,12 @@ using RootMotion.Dynamics;
 using System.Linq;
 using TimeSystem;
 
-namespace ithappy
-{
     public class CollisionForcer : MonoBehaviour
     {
         public float force = 10f;
         public Transform director;
         public Vector3 direction = Vector3.forward;
+        public bool canKill = false;
 
 
         private Vector3 _direction;
@@ -33,6 +32,9 @@ namespace ithappy
 
                 if (puppetMaster != null && puppetMaster != transform.GetComponentInParent<PuppetMaster>())
                 {
+                    if (canKill)
+                        puppetMaster.Kill();
+
                     var muscles = puppetMaster.muscles.Where(m => m.props.group == Muscle.Group.Spine || m.props.group == Muscle.Group.Hips);
 
                     _direction = collision.transform.position - collision.contacts[0].point;
@@ -43,10 +45,9 @@ namespace ithappy
 
                     foreach (var m in muscles)
                     {
-                        m.rigidbody.AddForce(_direction * force * TimeService.Scale, ForceMode.Impulse);
+                        m.rigidbody.AddForce(_direction * force, ForceMode.Impulse);
                     }
                 }
             }
         }
     }
-}
